@@ -63,46 +63,86 @@ grav = 0.25;
 
 #region CALLBACKS
 // callback function, called when colliding (with solids) in the x direction
-on_x_collide = function(_collision_side, _x, _y) { // @override
-	if (_collision_side == SIDES.LEFT) {
+on_x_collide = function(_x, _y) { // @override
+	if (check_collide_left_wall()) {
 		on_left_wall_collide();
+		show_debug_message("collided with left wall");
 	}
-	else if (_collision_side == SIDES.RIGHT) {
+	if (check_collide_right_wall()) {
 		on_right_wall_collide();
+		show_debug_message("collided with right wall");
 	}
 }
 
 // callback function, called when colliding (with solids) in the y direction
-on_y_collide = function(_collision_side, _x, _y) { // @override
-	if (_collision_side == SIDES.BOTTOM) {
+on_y_collide = function(_x, _y) { // @override
+	if (check_collide_ground()) {
 		on_ground_collide();
+		show_debug_message("collided with ground");
 	}
-	else if (_collision_side == SIDES.TOP) {
+	if (check_collide_ceil()) {
 		on_ceil_collide();
+		show_debug_message("collided with ceiling");
 	}
+}
+
+function check_collide_ground() {
+	for (var _i = bbox_left; _i < bbox_right; _i++) {
+		if (collide_at(solids_layer, _i, bbox_bottom + 1)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function check_collide_ceil() {
+	for (var _i = bbox_left; _i < bbox_right; _i++) {
+		if (collide_at(solids_layer, _i, bbox_top - 1)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function check_collide_left_wall() {
+	for (var _i = bbox_top; _i < bbox_bottom; _i++) {
+		if (collide_at(solids_layer, bbox_left - 1, _i)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function check_collide_right_wall() {
+	for (var _i = bbox_top; _i < bbox_bottom; _i++) {
+		if (collide_at(solids_layer, bbox_right + 1, _i)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 on_left_wall_collide = function() {
 	x_speed = 0.0;
 	desired_x_speed = 0.0;
-	
-	show_debug_message("left wall collide call");
-	part_manager_create_particles(ps_jam_right, x, y, part_layer);
+
+	//part_manager_create_particles(ps_jam_right, x, y, part_layer);
 }
 
 on_right_wall_collide = function() {
 	x_speed = 0.0;
 	desired_x_speed = 0.0;
-	
-	show_debug_message("right wall collide call");
-	part_manager_create_particles(ps_jam_left, x, y, part_layer);
+
+	//part_manager_create_particles(ps_jam_left, x, y, part_layer);
 }
 
 on_ground_collide = function() {
 	is_grounded = true;
 	grav_scale = 1.0;
 	// decrease spread meter proportional to y speed when landing
-	reduce_spread_meter((y_speed/fall_max * (air_time_frames / game_get_speed(gamespeed_fps)) * (air_time_frames / game_get_speed(gamespeed_fps))) * spread_reduction_factor);
+	var _seconds_in_air = air_time_frames/game_get_speed(gamespeed_fps);
+	var _percent_fall_speed = y_speed/fall_max;
+	reduce_spread_meter((_percent_fall_speed * power(_seconds_in_air, 2) * spread_reduction_factor));
 	y_speed = 0.0;
 	
 	ended_jump_early = false;

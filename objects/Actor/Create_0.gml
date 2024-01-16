@@ -28,14 +28,6 @@ rotation = 0.0;
 
 animator = animator_create();
 
-enum SIDES {
-	NONE = 0,
-	LEFT = 1,
-	TOP = 2,
-	RIGHT = 3,
-	BOTTOM = 4
-}
-
 solids_layer = layer_tilemap_get_id("solids");
 
 enable = function() {
@@ -68,15 +60,15 @@ function move_x(_collision_layer, _amount, _on_collide) {
 		while (_x_move != 0) {
 			var _location_x = x + _sign;
 			var _location_y = y;
-			var _collision_side = collide_at(_collision_layer, _location_x, _location_y);
-			if (_collision_side == 0) {
+			var _collision = collide_at(_collision_layer, _location_x, _location_y);
+			if (!_collision) {
 				x += _sign;
 				_x_move -= _sign;
 			}
 			else {
 				// collision. stop moving. you crazy bastard
 				if (_on_collide) {
-					_on_collide(_collision_side, _location_x, _location_y);
+					_on_collide(_location_x, _location_y);
 				}
 				break;
 			}
@@ -97,15 +89,15 @@ function move_y(_collision_layer, _amount, _on_collide) {
 		while (_y_move != 0) {
 			var _location_x = x;
 			var _location_y = y + _sign;
-			var _collision_side = collide_at(_collision_layer, _location_x, _location_y);
-			if (_collision_side == 0) {
+			var _collision = collide_at(_collision_layer, _location_x, _location_y);
+			if (!_collision) {
 				y += _sign;
 				_y_move -= _sign;
 			}
 			else {
 				// collision. stop moving. you crazy bastard
 				if _on_collide {
-					_on_collide(_collision_side, _location_x, _location_y);
+					_on_collide(_location_x, _location_y);
 				}
 				break;
 			}
@@ -132,43 +124,32 @@ function collide_at(_collision_layer, _x_pos, _y_pos) {
 	var _y_min = bbox_top + _y_translate_amnt;
 	var _y_max = bbox_bottom-1 + _y_translate_amnt;
 	
-	show_debug_message(string(_x_translate_amnt) + string(_y_translate_amnt));
-	
-	self.x_min = _x_min;
-	self.x_max = _x_max;
-	self.y_max = _y_max;
-	self.y_min = _y_min;
-	
 	// check all sides of bbox
 	// check top and bottom sides of rectangle
 	for (var _i = _x_min; _i <= _x_max; _i++) {
 		if (tilemap_get_at_pixel(_collision_layer, _i, _y_min) != 0) {
-			show_debug_message("COLLIDE AT TOP");
-			return SIDES.TOP;
+			return true;
 		}
 		if (tilemap_get_at_pixel(_collision_layer, _i, _y_max) != 0) {
-			show_debug_message("COLLIDE AT BOTTOM");
-			return SIDES.BOTTOM;
+			return true;
 		}
 	}
 	
 	// check left and right sides of rectangle
 	for (var _i = _y_min; _i <= _y_max; _i++) {
 		if (tilemap_get_at_pixel(_collision_layer, _x_min, _i) != 0) {
-			show_debug_message("COLLIDE AT LEFT");
-			return SIDES.LEFT;
+			return true;
 		}
 		if (tilemap_get_at_pixel(_collision_layer, _x_max, _i) != 0) {
-			show_debug_message("COLLIDE AT RIGHT");
-			return SIDES.RIGHT;
+			return true;
 		}
 	}
 	
 	
 	
-	return SIDES.NONE;
+	return false;
 } 
 
 // callback functions for collisions, override in children
-function on_x_collide(_collision_side, _x, _y) {}
-function on_y_collide(_collision_side, _x, _y) {}
+function on_x_collide(_x, _y) {}
+function on_y_collide(_x, _y) {}
