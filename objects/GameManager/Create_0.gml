@@ -1,4 +1,4 @@
-is_paused = false;
+global.is_paused = false;
 
 global.player_exists = false;
 global.player = instance_find(Player, 0);

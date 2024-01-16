@@ -1,7 +1,7 @@
 {
   "resourceType": "GMParticleSystem",
   "resourceVersion": "1.0",
-  "name": "ps_jam",
+  "name": "ps_jam_up",
   "backdropHeight": 768,
   "backdropImageOpacity": 0.5,
   "backdropImagePath": "",

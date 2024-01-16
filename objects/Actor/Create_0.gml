@@ -8,6 +8,15 @@
 
 */
 
+#region debug
+
+x_min = 0;
+x_max = 0;
+y_max = 0;
+y_min = 0;
+
+#endregion
+
 is_enabled = false;
 
 x_speed = 0.0;
@@ -120,46 +129,43 @@ function collide_at(_collision_layer, _x_pos, _y_pos) {
 	
 	var _x_min = bbox_left + _x_translate_amnt;
 	var _x_max = bbox_right-1 + _x_translate_amnt;
-	var _y_min = bbox_bottom-1 + _y_translate_amnt;
-	var _y_max = bbox_top + _y_translate_amnt;
+	var _y_min = bbox_top + _y_translate_amnt;
+	var _y_max = bbox_bottom-1 + _y_translate_amnt;
+	
+	show_debug_message(string(_x_translate_amnt) + string(_y_translate_amnt));
+	
+	self.x_min = _x_min;
+	self.x_max = _x_max;
+	self.y_max = _y_max;
+	self.y_min = _y_min;
 	
 	// check all sides of bbox
 	// check top and bottom sides of rectangle
 	for (var _i = _x_min; _i <= _x_max; _i++) {
 		if (tilemap_get_at_pixel(_collision_layer, _i, _y_min) != 0) {
-			return SIDES.BOTTOM;
-		}
-		if (tilemap_get_at_pixel(_collision_layer, _i, _y_max) != 0) {
+			show_debug_message("COLLIDE AT TOP");
 			return SIDES.TOP;
 		}
+		if (tilemap_get_at_pixel(_collision_layer, _i, _y_max) != 0) {
+			show_debug_message("COLLIDE AT BOTTOM");
+			return SIDES.BOTTOM;
+		}
 	}
+	
 	// check left and right sides of rectangle
 	for (var _i = _y_min; _i <= _y_max; _i++) {
 		if (tilemap_get_at_pixel(_collision_layer, _x_min, _i) != 0) {
+			show_debug_message("COLLIDE AT LEFT");
 			return SIDES.LEFT;
 		}
 		if (tilemap_get_at_pixel(_collision_layer, _x_max, _i) != 0) {
+			show_debug_message("COLLIDE AT RIGHT");
 			return SIDES.RIGHT;
 		}
 	}
-		
-	//// test bottom left inside tile
-	//if (tilemap_get_at_pixel(_collision_layer, _x_min, _y_min) != 0) {
-	//	return true;
-	//}
-	//// test bottom right inside tile
-	//else if (tilemap_get_at_pixel(_collision_layer, _x_max, _y_min) != 0) {
-	//	return true;
-	//}
-	//// test top left inside tile
-	//else if (tilemap_get_at_pixel(_collision_layer, _x_min, _y_max) != 0) {
-	//	return true;
-	//}
-	//// test top right inside tile
-	//else if (tilemap_get_at_pixel(_collision_layer, _x_max, _y_max) != 0) {
-	//	return true;
-	//}
-	// we good!
+	
+	
+	
 	return SIDES.NONE;
 } 
 

@@ -120,37 +120,6 @@ function update_speed() {
 // call every frame
 // controls the player's animations 
 function update_animation() {
-	//if (anim_ended_this_step && current_animation == "initial_jump") {
-	//	animation_play("air_spin");
-	//}
-	
-	// special case animation, want to increase speed of animation based on h_speed, and play it in reverse when h_speed is negative
-	// basically, the further away from zero the faster the animation plays (to a point)
-	//if (current_animation == "air_spin") {
-	//	// placeholder values subject to change
-	//	var _min_playback_speed = 250; // ms
-	//	var _max_playback_speed = 25; // ms
-		
-	//	var _current_playback_speed = lerp(_min_playback_speed, _max_playback_speed, abs(x_speed/move_max));
-		
-	//	var _playback_direction = sign(x_speed) < 0 ? -1 : 1;
-		
-	//	// manually do elapsed timing because the duration AND direction depends on the speed of the player.
-	//	// THIS is the reason why i have the animator built into the player, and have its 'private' members accessible by the player
-	//	anim_elapsed_time += (delta_time / 1000);
-	//	if (anim_elapsed_time >= _current_playback_speed && abs(x_speed) > 0.01) {
-	//		if (_playback_direction > 0) animation_increase_frame();
-	//		else animation_decrease_frame();
-			
-	//		anim_elapsed_time = 0;
-	//	}
-		
-	//	return;
-	//}
-	//if (is_grounded) {
-	//	animator_set_animation(animator, "grounded");
-	//}
-	
 	if (animator_get_animation(animator) == "air_spin") {
 		// placeholder values subject to change
 		var _min_playback_speed = 250; // ms
@@ -161,21 +130,19 @@ function update_animation() {
 		var _playback_direction = sign(x_speed) < 0 ? -1 : 1;
 		
 		// manually do elapsed timing because the duration AND direction depends on the speed of the player.
-		// i hate that i'm accessing the animator's private members from outside of it BUT THIS IS A SPECIAL CAAAASE
+		// i hate that i'm accessing the animator's private members from outside of it BUT THIS IS A SPECIAL CAAAASE so whatever
 		
 		animator.elapsed_time += (delta_time / 1000);
 		if (animator.elapsed_time >= _current_playback_speed && abs(x_speed) > 0.01) {
 			if (_playback_direction > 0) animator_increase_frame(animator);
 			else animator_decrease_frame(animator);
 			
-			//animator.elapsed_time = animator.elapsed_time mod _current_playback_speed;
-			animator.elapsed_time = 0;
+			animator.elapsed_time = animator.elapsed_time mod _current_playback_speed;
+			//animator.elapsed_time = 0;
 		}
-		
-		return;
+	
 	}
 	
-	//animator_draw(animator, x, y);
 	animator_update(animator);
 }
 
@@ -185,6 +152,5 @@ if (is_enabled) {
 	self.update_speed();
 	self.update_animation();
 	
-	// move is auto called by the parent
-	
+	// move is called in event_inherited()
 }

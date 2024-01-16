@@ -68,7 +68,7 @@ on_x_collide = function(_collision_side, _x, _y) { // @override
 		on_left_wall_collide();
 	}
 	else if (_collision_side == SIDES.RIGHT) {
-		on_right_collide();
+		on_right_wall_collide();
 	}
 }
 
@@ -85,11 +85,17 @@ on_y_collide = function(_collision_side, _x, _y) { // @override
 on_left_wall_collide = function() {
 	x_speed = 0.0;
 	desired_x_speed = 0.0;
+	
+	show_debug_message("left wall collide call");
+	part_manager_create_particles(ps_jam_right, x, y, part_layer);
 }
 
 on_right_wall_collide = function() {
 	x_speed = 0.0;
 	desired_x_speed = 0.0;
+	
+	show_debug_message("right wall collide call");
+	part_manager_create_particles(ps_jam_left, x, y, part_layer);
 }
 
 on_ground_collide = function() {
@@ -105,10 +111,10 @@ on_ground_collide = function() {
 	
 	// cosmetic effects!
 	// create jam burst particles at landing spot!
-	instance_create_depth(x, y, 0, JamParticles, {"part_layer": part_layer});
+	//instance_create_depth(x, y, 0, JamParticles, {"part_layer": part_layer});
+	part_manager_create_particles(ps_jam_up, x, y, part_layer);
 	// start playing grounded animation when hitting the ground
 	animator_set_animation(animator, "grounded");
-	//animation_play("grounded");
 }
 
 on_ceil_collide = function() {
@@ -126,16 +132,15 @@ on_hit_ground = function(_y_speed) {
 	
 	// cosmetic effects!
 	// create jam burst particles at landing spot!
-	instance_create_depth(x, y, 0, JamParticles, {"part_layer": part_layer});
+	//instance_create_depth(x, y, 0, JamParticles, {"part_layer": part_layer});
+	part_manager_create_particles(ps_jam_up, x, y, part_layer);
 	// start playing grounded animation when hitting the ground
 	animator_set_animation(animator, "grounded");
-	//animation_play("grounded");
 }
 
 on_leave_ground = function() {
 	is_grounded = false;
 	animator_set_animation(animator, "initial_jump", on_anim_finish_air_initial_jump);
-	//animation_play("initial_jump");
 }
 
 #endregion
@@ -168,73 +173,10 @@ restore_spread_meter = function() {
 	spread_meter = 100.0;
 }
 
-
-
 #endregion
 
-#region animaTING
-
-
-//current_animation = "grounded";
-//current_animation_frame = animations[$ current_animation].first;
-//anim_elapsed_time = 0;
-//anim_ended_this_step = false;
-//anim_disable_auto_update = false; 
-
+// animation callbacks
 on_anim_finish_air_initial_jump = function() {
 	animator_set_animation(animator, "air_spin");
 	animator_disable_auto_update(animator);
 }
-
-//// animation functions!
-//// call when you want to increase the frame of animation, wraps around the last frame to the first
-//animation_increase_frame = function() {
-//	if (current_animation_frame + 1 >= animations[$ current_animation].last) {
-//		current_animation_frame = animations[$ current_animation].first;
-//		anim_ended_this_step = true;
-//		if (animations[$ current_animation].one_shot) {
-//			 on_animation_end(current_animation);
-//			 anim_disable_auto_update = true;
-//		}
-//	} else {
-//		current_animation_frame += 1;
-//	}
-//}
-
-//// call when you want to decrease the frame of animation, wraps around the first frame to the last
-//animation_decrease_frame = function() {
-//	if (current_animation_frame - 1 <= animations[$ current_animation].first) {
-//		current_animation_frame = animations[$ current_animation].last;
-//		anim_ended_this_step = true;
-//	} else {
-//		current_animation_frame -= 1;
-//	}
-//}
-
-//// play animation called _name
-//animation_play = function(_name) {
-//	if (current_animation != _name) {
-//		if (animations[$ _name] != undefined) {
-//			current_animation = _name;
-//			anim_elapsed_time = 0;
-//			anim_disable_auto_update = false;
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-
-//// call when you want to advance the current animation, meaning it will check if the amount of time elapsed is greater than the length of the current animation frame
-//// and will increase the frame if so
-//animation_update = function() {
-//	if (!anim_disable_auto_update) {
-//		var _anim_length = animations[$ current_animation].length;
-//		anim_elapsed_time += (delta_time / 1000);
-//		if (anim_elapsed_time >= _anim_length) {
-//			animation_increase_frame();
-//			anim_elapsed_time = anim_elapsed_time mod _anim_length;
-//		}
-//	}
-//}
-
-#endregion
