@@ -46,6 +46,7 @@
     {"id":{"name":"Jar","path":"objects/Jar/Jar.yy",},},
     {"id":{"name":"ts_gray_box","path":"tilesets/ts_gray_box/ts_gray_box.yy",},},
     {"id":{"name":"spr_gray_box","path":"sprites/spr_gray_box/spr_gray_box.yy",},},
+    {"id":{"name":"spr_toaster","path":"sprites/spr_toaster/spr_toaster.yy",},},
     {"id":{"name":"Actor","path":"objects/Actor/Actor.yy",},},
     {"id":{"name":"Toaster","path":"objects/Toaster/Toaster.yy",},},
     {"id":{"name":"LevelExit","path":"objects/LevelExit/LevelExit.yy",},},

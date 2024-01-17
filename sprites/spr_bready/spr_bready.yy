@@ -4,7 +4,7 @@
   "name": "spr_bready",
   "bbox_bottom": 18,
   "bbox_left": 12,
-  "bbox_right": 19,
+  "bbox_right": 20,
   "bbox_top": 14,
   "bboxMode": 2,
   "collisionKind": 5,

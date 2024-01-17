@@ -11,7 +11,7 @@ part_layer = layer_create(0, "particles");
 // when spread meter reaches zero, must restart the level!
 // reduce spread meter by 
 spread_meter = 100.0;
-spread_reduction_factor = 15;
+spread_reduction_factor = 5;
 
 input_enabled = true;
 
@@ -40,6 +40,10 @@ frame_j_pressed = -1;
 
 ended_jump_early = false;
 
+jump_released_this_frame = false;
+charged_jump_force = 0.0;
+charged_jump_max = 6.0;
+
 grav_scale = 1.0;
 
 air_time_frames = 0;
@@ -53,6 +57,7 @@ jump_force = 6.0;
 move_speed = 0.75;
 move_accel = 0.25;
 move_deccel = 0.15;
+air_deccel = 0.05;
 move_max = 2.5;
 grav = 0.25;
 
@@ -87,8 +92,8 @@ on_y_collide = function(_x, _y) { // @override
 }
 
 function check_collide_ground() {
-	for (var _i = bbox_left; _i < bbox_right; _i++) {
-		if (collide_at(solids_layer, _i, bbox_bottom + 1)) {
+	for (var _i = bbox_left + 1; _i < bbox_right; _i++) {
+		if (tilemap_get_at_pixel(solids_layer, _i, bbox_bottom) != 0) {
 			return true;
 		}
 	}
@@ -96,8 +101,8 @@ function check_collide_ground() {
 }
 
 function check_collide_ceil() {
-	for (var _i = bbox_left; _i < bbox_right; _i++) {
-		if (collide_at(solids_layer, _i, bbox_top - 1)) {
+	for (var _i = bbox_left + 1; _i < bbox_right; _i++) {
+		if (tilemap_get_at_pixel(solids_layer, _i, bbox_top - 1) != 0) {
 			return true;
 		}
 	}
@@ -106,7 +111,7 @@ function check_collide_ceil() {
 
 function check_collide_left_wall() {
 	for (var _i = bbox_top; _i < bbox_bottom; _i++) {
-		if (collide_at(solids_layer, bbox_left - 1, _i)) {
+		if (tilemap_get_at_pixel(solids_layer, bbox_left - 1, _i) != 0) {
 			return true;
 		}
 	}
@@ -115,7 +120,7 @@ function check_collide_left_wall() {
 
 function check_collide_right_wall() {
 	for (var _i = bbox_top; _i < bbox_bottom; _i++) {
-		if (collide_at(solids_layer, bbox_right + 1, _i)) {
+		if (tilemap_get_at_pixel(solids_layer, bbox_right, _i) != 0) {
 			return true;
 		}
 	}
@@ -142,7 +147,12 @@ on_ground_collide = function() {
 	// decrease spread meter proportional to y speed when landing
 	var _seconds_in_air = air_time_frames/game_get_speed(gamespeed_fps);
 	var _percent_fall_speed = y_speed/fall_max;
-	reduce_spread_meter((_percent_fall_speed * power(_seconds_in_air, 2) * spread_reduction_factor));
+	
+	// check if spread meter is depleted
+	if (spread_meter <= 0.0) {
+		
+	}
+	
 	y_speed = 0.0;
 	
 	ended_jump_early = false;
@@ -151,7 +161,6 @@ on_ground_collide = function() {
 	
 	// cosmetic effects!
 	// create jam burst particles at landing spot!
-	//instance_create_depth(x, y, 0, JamParticles, {"part_layer": part_layer});
 	part_manager_create_particles(ps_jam_up, x, y, part_layer);
 	// start playing grounded animation when hitting the ground
 	animator_set_animation(animator, "grounded");
@@ -167,7 +176,7 @@ on_hit_ground = function(_y_speed) {
 	is_grounded = true;
 	grav_scale = 1.0;
 	// decrease spread meter proportional to y speed when landing
-	reduce_spread_meter(_y_speed);
+	// reduce_spread_meter(_y_speed);
 	air_time_frames = 0;
 	
 	// cosmetic effects!
@@ -188,6 +197,14 @@ on_leave_ground = function() {
 // called to make player jump, this is also constantly called when the button is held down
 jump = function() {
 	y_speed = -jump_force;
+}
+
+function jump2() {
+	y_speed = -charged_jump_force;
+	x_speed += charged_jump_force * x_input * 0.2;
+	desired_x_speed += charged_jump_force * x_input * 0.2;
+	reduce_spread_meter(charged_jump_force * spread_reduction_factor);
+	charged_jump_force = 0.0;
 }
 
 // check if the player is on the floor, by checking 1 px below it on the far left and far right

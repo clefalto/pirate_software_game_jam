@@ -145,8 +145,6 @@ function collide_at(_collision_layer, _x_pos, _y_pos) {
 		}
 	}
 	
-	
-	
 	return false;
 } 
 

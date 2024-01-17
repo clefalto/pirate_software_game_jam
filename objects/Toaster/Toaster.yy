@@ -25,7 +25,10 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": null,
+  "spriteId": {
+    "name": "spr_toaster",
+    "path": "sprites/spr_toaster/spr_toaster.yy",
+  },
   "spriteMaskId": null,
   "visible": true,
 }

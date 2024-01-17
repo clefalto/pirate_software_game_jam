@@ -9,12 +9,14 @@
   "instanceCreationOrder": [
     {"name":"inst_2C0626CB","path":"rooms/rm_big/rm_big.yy",},
     {"name":"inst_1DCC4198","path":"rooms/rm_big/rm_big.yy",},
+    {"name":"inst_59FE4B4A","path":"rooms/rm_big/rm_big.yy",},
   ],
   "isDnd": false,
   "layers": [
     {"resourceType":"GMRInstanceLayer","resourceVersion":"1.0","name":"Instances","depth":0,"effectEnabled":true,"effectType":null,"gridX":8,"gridY":8,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_2C0626CB","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"objectId":{"name":"Player","path":"objects/Player/Player.yy",},"properties":[],"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":52.0,"y":77.0,},
         {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_1DCC4198","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"objectId":{"name":"LevelExit","path":"objects/LevelExit/LevelExit.yy",},"properties":[],"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":465.0,"y":278.0,},
+        {"resourceType":"GMRInstance","resourceVersion":"1.0","name":"inst_59FE4B4A","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"objectId":{"name":"Toaster","path":"objects/Toaster/Toaster.yy",},"properties":[],"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":165.0,"y":264.0,},
       ],"layers":[],"properties":[],"userdefinedDepth":false,"visible":true,},
     {"resourceType":"GMRTileLayer","resourceVersion":"1.1","name":"solids","depth":100,"effectEnabled":true,"effectType":null,"gridX":8,"gridY":8,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"properties":[],"tiles":{"SerialiseHeight":45,"SerialiseWidth":80,"TileCompressedData":[
 -22,-2147483648,-24,1,-60,-2147483648,-19,1,-64,-2147483648,-14,1,-68,-2147483648,-9,1,-54,-2147483648,-6,0,-11,-2147483648,-8,1,-55,-2147483648,-8,0,-10,-2147483648,-6,1,-63,-2147483648,-3,0,2,-2147483648,0,-6,-2147483648,-5,1,-66,-2147483648,-4,0,-5,-2147483648,-5,1,-66,-2147483648,-4,0,-5,-2147483648,-4,1,-53,-2147483648,1,0,-6,-2147483648,1,0,-6,-2147483648,-4,0,-5,-2147483648,-4,1,-44,-2147483648,-16,1,2,

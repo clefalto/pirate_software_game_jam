@@ -1,8 +1,5 @@
 // PLAYER_STEP
 
-event_inherited();
-
-
 // call every frame (TODO separate the player and the Character (bread) so that the Player object /sends/ data to the Character object)
 function detect_input() {
 	if (input_enabled) {
@@ -15,6 +12,8 @@ function detect_input() {
 		} else {
 			x_input = 0;
 		}
+		
+		jump_released_this_frame = false;
 	
 		if (keyboard_check(ord("Z"))) {
 			jump_held = true;
@@ -32,6 +31,8 @@ function detect_input() {
 			}
 			time_held_jump = 0;
 			jump_held = false;
+			
+			jump_released_this_frame = true;
 		}
 	}
 	else {
@@ -39,6 +40,7 @@ function detect_input() {
 		jump_held = false;
 		time_held_jump = 0;
 		j_buffer = -1;
+		jump_released_this_frame = false;
 	}
 }
 
@@ -86,7 +88,8 @@ function update_speed() {
 	// calculating True x_speed
 	if (abs(x_speed) > _move_max && _target_direction == sign(x_speed)) {
 		_target = _move_max;
-		_accel = _move_deccel;
+		if (!is_grounded) _accel = air_deccel;
+		else _accel = _move_deccel;
 	} else if (_target_direction != 0) {
 		_target = _move_max;
 	}
@@ -98,7 +101,8 @@ function update_speed() {
 	_accel = _move_accel;
 	if (abs(desired_x_speed) > _move_max && x_input == sign(desired_x_speed)) {
 		_target = _move_max;
-		_accel = _move_deccel;
+		if (!is_grounded) _accel = air_deccel;
+		else _accel = _move_deccel;
 	} else if (x_input != 0) {
 		_target = _move_max;
 	}
@@ -109,10 +113,19 @@ function update_speed() {
 		x_speed = desired_x_speed;
 	} 
 	
-	if (j_buffer > 0) {
-		j_buffer -= 1;
-		if (is_grounded) {
-			self.jump();
+	//if (j_buffer > 0) {
+	//	j_buffer -= 1;
+	//	if (is_grounded) {
+	//		self.jump();
+	//	}
+	//}
+	if (is_grounded) {
+		if (jump_held) {
+			charged_jump_force = clamp(charged_jump_force + 0.25, 0.0, charged_jump_max);
+		}
+	
+		if (jump_released_this_frame) {
+			jump2();
 		}
 	}
 }
@@ -152,5 +165,7 @@ if (is_enabled) {
 	self.update_speed();
 	self.update_animation();
 	
-	// move is called in event_inherited()
+	// move is called in event_inherited (above)
 }
+
+event_inherited();

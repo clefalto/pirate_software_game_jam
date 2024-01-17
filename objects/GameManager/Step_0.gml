@@ -1,12 +1,9 @@
+/// @desc GAME MANAGER STEP EVENT
+
 // update current frame
 global.current_frame += 1;
 
-// update dt, the lower time_scale is the longer there WOULD BE between frames, so the higher dt is
-// global.dt is used in almost all things that move to control their speed and make it framerate independent
-// altering dt using time_scale like this makes things that use dt move slower when time_scale is lower
-// (i think)
-global.dt = delta_time / 1000000;
-//global.dt = delta_time / 1000000;
+global.dt = delta_time / 1000000; // seconds
 
 // pausing
 if (keyboard_check_pressed(vk_escape)) {

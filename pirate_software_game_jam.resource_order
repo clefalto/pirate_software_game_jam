@@ -26,6 +26,7 @@
     {"name":"DebugDisplay","order":8,"path":"objects/DebugDisplay/DebugDisplay.yy",},
     {"name":"scr_animation_data","order":8,"path":"scripts/scr_animation_data/scr_animation_data.yy",},
     {"name":"Jar","order":2,"path":"objects/Jar/Jar.yy",},
+    {"name":"spr_toaster","order":8,"path":"sprites/spr_toaster/spr_toaster.yy",},
     {"name":"Actor","order":1,"path":"objects/Actor/Actor.yy",},
     {"name":"Toaster","order":3,"path":"objects/Toaster/Toaster.yy",},
     {"name":"LevelExit","order":4,"path":"objects/LevelExit/LevelExit.yy",},

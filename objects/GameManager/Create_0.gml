@@ -1,3 +1,5 @@
+/// @desc GAME MANAGER CREATE EVENT
+
 global.is_paused = false;
 
 global.player_exists = false;
