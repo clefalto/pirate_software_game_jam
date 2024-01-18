@@ -1,20 +1,18 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "Toaster",
+  "name": "Menu",
   "eventList": [
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":64,"eventType":8,"isDnD":false,},
   ],
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "actors",
-    "path": "folders/Objects/actors.yy",
+    "name": "Objects",
+    "path": "folders/Objects.yy",
   },
-  "parentObjectId": {
-    "name": "Actor",
-    "path": "objects/Actor/Actor.yy",
-  },
+  "parentObjectId": null,
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
@@ -31,8 +29,8 @@
   "properties": [],
   "solid": false,
   "spriteId": {
-    "name": "spr_toaster",
-    "path": "sprites/spr_toaster/spr_toaster.yy",
+    "name": "spr_menu_background",
+    "path": "sprites/spr_menu_background/spr_menu_background.yy",
   },
   "spriteMaskId": null,
   "visible": true,

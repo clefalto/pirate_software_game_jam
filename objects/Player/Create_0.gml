@@ -161,9 +161,11 @@ on_ground_collide = function() {
 	
 	// cosmetic effects!
 	// create jam burst particles at landing spot!
-	part_manager_create_particles(ps_jam_up, x, y, part_layer);
+	if (global.current_frame >= 3) {
+		part_manager_create_particles(ps_jam_up, x, y, part_layer);
+	}
 	// start playing grounded animation when hitting the ground
-	animator_set_animation(animator, "grounded");
+	animator_set_animation(animator, "default");
 }
 
 on_ceil_collide = function() {
@@ -184,7 +186,7 @@ on_hit_ground = function(_y_speed) {
 	//instance_create_depth(x, y, 0, JamParticles, {"part_layer": part_layer});
 	part_manager_create_particles(ps_jam_up, x, y, part_layer);
 	// start playing grounded animation when hitting the ground
-	animator_set_animation(animator, "grounded");
+	animator_set_animation(animator, "default");
 }
 
 on_leave_ground = function() {

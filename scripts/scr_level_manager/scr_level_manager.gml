@@ -1,8 +1,8 @@
-num_levels_ = 0;
+num_levels_ = 2;
 current_level_ = undefined;
 
 // name: level number -> room that corresponds to it
-level2room_ = {};
+level2room_ = [3, 4];
 
 function get_current_level() {
 	return current_level_;
