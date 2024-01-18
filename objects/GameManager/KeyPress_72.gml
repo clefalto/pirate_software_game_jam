@@ -1,0 +1,1 @@
+global.hitboxes_enabled = !global.hitboxes_enabled;

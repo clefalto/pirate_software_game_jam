@@ -2,6 +2,7 @@
 
 global.is_paused = false;
 global.current_frame = 0;
+global.hitboxes_enabled = false;
 
 menu = undefined;
 
@@ -40,12 +41,12 @@ function on_pause() {
 	
 	// spawn in pause menu
 	menu = instance_create_depth(x, y, -1000, Menu, {
-		"width": 25,
+		"width": 50,
 		"height": 75,
 		"size_border": 4,
 		"line_height": 8,
 		"text_centered": true,
-		"options": [new MenuItem("resume", fnt_m3x6, 25, 8), new MenuItem("options", fnt_m3x6, 25, 8)],
+		"options": [new MenuItem("resume", fnt_m3x6, 25, 8), new MenuItem("options", fnt_m3x6, 25, 8), new MenuItem("quit", fnt_m3x6, 25, 8)],
 	});
 }
 

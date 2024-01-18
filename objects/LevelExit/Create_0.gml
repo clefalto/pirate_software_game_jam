@@ -9,7 +9,7 @@ function anim_bounce() {
 }
 
 function anim_normal() {
-	animator_set_animation(animator, "normal");
+	animator_set_animation(animator, "default");
 }
 
 self.anim_normal();

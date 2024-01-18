@@ -1,1 +1,1 @@
-room_goto(rm_small);
+room_goto(rm_level_0);

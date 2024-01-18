@@ -43,6 +43,7 @@ ended_jump_early = false;
 jump_released_this_frame = false;
 charged_jump_force = 0.0;
 charged_jump_max = 6.0;
+jump_meter = undefined;
 
 grav_scale = 1.0;
 
@@ -163,6 +164,11 @@ on_ground_collide = function() {
 	// create jam burst particles at landing spot!
 	if (global.current_frame >= 3) {
 		part_manager_create_particles(ps_jam_up, x, y, part_layer);
+	}
+	
+	// check if jump meter exists and you're not on the ground (means you were holding jump and slid off)
+	if (instance_exists(jump_meter)) {
+		instance_destroy(jump_meter);
 	}
 	// start playing grounded animation when hitting the ground
 	animator_set_animation(animator, "default");

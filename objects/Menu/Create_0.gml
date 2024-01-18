@@ -22,6 +22,7 @@ self[$ "line_height"] ??= 8;
 self[$ "text_centered"] ??= false;
 self[$ "options"] ??= [new MenuItem("no options...", fnt_m3x6, width - size_border*2, line_height)];
 
+// center before centering in drawgui
 x = Camera.view_width/2 - self.width/2;
 y = Camera.view_height/2 - self.height/2;
 
