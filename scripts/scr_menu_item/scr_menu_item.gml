@@ -1,4 +1,4 @@
-function MenuItem(_text, _font, _max_width, _line_height) constructor {
+function MenuItem(_text, _font, _max_width, _line_height, _callback = function() {}) constructor {
 	text = _text;
 	font = _font;
 	max_width = _max_width;
@@ -11,6 +11,8 @@ function MenuItem(_text, _font, _max_width, _line_height) constructor {
 	trigger = false;
 	
 	line_height = _line_height
+	
+	callback = _callback;
 
 	alter_text = function(_new_text) {
 		self.text = _new_text;
@@ -38,6 +40,14 @@ function MenuItem(_text, _font, _max_width, _line_height) constructor {
 	}
 	
 	detect_click = function() {
-		return detect_mouse() && mouse_check_button_pressed(1);
+		if (detect_mouse() && mouse_check_button_pressed(1)) {
+			callback();
+			return true;
+		}
+		return false;
+	}
+	
+	call_callback = function() {
+		callback();
 	}
 }

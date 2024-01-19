@@ -1,54 +1,56 @@
 num_levels_ = 2;
-current_level_ = undefined;
+current_level_ = 0;
 
 // name: level number -> room that corresponds to it
+// this is populated MANUALLY EWWW
 level2room_ = [3, 4];
 
-function get_current_level() {
-	return current_level_;
+// GLOBAL VARIABLES AAAAAAAAAAAAAAAAAAAAAAAGHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+function level_get_current_level() {
+	return global.current_level_;
 }
 
-function get_num_levels() {
-	return num_levels_;
+function level_get_num_levels() {
+	return global.num_levels_;
 }
 
-function restart_level() {
-	if (!is_undefined(current_level_)) {
-		room_goto(level2room_[$ current_level_]);
+function level_restart() {
+	if (!is_undefined(global.current_level_)) {
+		room_goto(global.level2room_[global.current_level_]);
 	}
 }
 
-function switch_level(_level_index) {
-	if (_level_index == current_level_) {
-		restart_level();
+function level_switch(_level_index) {
+	if (_level_index == global.current_level_) {
+		level_restart();
 		return true;
 	}
-	else if (_level_index >= num_levels_ || _level_index < 0) {
+	else if (_level_index >= global.num_levels_ || _level_index < 0) {
 		return false;
 	}
 	else {
-		current_level_ = _level_index;
-		room_goto(level2room_[$ _level_index]);
+		global.current_level_ = _level_index;
+		room_goto(global.level2room_[_level_index]);
 		return true;
 	}
 }
 
-function next_level() {
-	return switch_level(current_level_ + 1);
+function level_goto_next() {
+	return level_switch(global.current_level_ + 1);
 }
 
-function prev_level() {
-	return switch_level(current_level_ - 1);
+function level_goto_prev() {
+	return level_switch(global.current_level_ - 1);
 }
 
-function add_level(_room_index) {
+function level_add(_room_index) {
 	// check to see if a level uses this room
-	for (var _i = 0; _i < num_levels_; _i++) {
-		if (struct_get(level2room, string(_i)) == _room_index) {
+	for (var _i = 0; _i < global.num_levels_; _i++) {
+		if (struct_get(global.level2room, string(_i)) == _room_index) {
 			return false;
 		}
 	}
-	struct_set(level2room_, string(num_levels_), _room_index);
-	num_levels_++;
+	array_push(global.level2room_, _room_index);
+	global.num_levels_++;
 	return true;
 }

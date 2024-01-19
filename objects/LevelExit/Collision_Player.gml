@@ -6,7 +6,10 @@
 // do Unite animation, and wait x seconds
 // activate new level menu? / continue button?
 
-// get The GameManager
-var _gm = instance_find(GameManager, 0);
-
-_gm.on_level_finish();
+if (self.is_enabled) {
+	// activate player reach exit event (user event 1)
+	event_user(1);
+	
+	var _gm = instance_find(GameManager, 0);
+	_gm.on_level_complete();
+}

@@ -21,10 +21,16 @@ self[$ "size_border"] ??= 4;
 self[$ "line_height"] ??= 8;
 self[$ "text_centered"] ??= false;
 self[$ "options"] ??= [new MenuItem("no options...", fnt_m3x6, width - size_border*2, line_height)];
+self[$ "centered"] ??= true;
+self[$ "title"] ??= "";
 
-// center before centering in drawgui
-x = Camera.view_width/2 - self.width/2;
-y = Camera.view_height/2 - self.height/2;
+if (centered) {
+	// center before centering in drawgui
+	x = Camera.view_width/2 - self.width/2;
+	y = Camera.view_height/2 - self.height/2;
+}
+
+selected = 0;
 
 draw_sprite_ext(sprite_index, image_index, x, y, width/sprite_width, height/sprite_height, 0, c_white, 1.0);
 

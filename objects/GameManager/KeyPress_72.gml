@@ -1,1 +1,1 @@
-global.hitboxes_enabled = !global.hitboxes_enabled;
+global.debug_enabled = !global.debug_enabled;

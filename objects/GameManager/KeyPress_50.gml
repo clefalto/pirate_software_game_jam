@@ -1,1 +1,1 @@
-room_goto(rm_big);
+level_switch(1);

@@ -2,20 +2,14 @@
 
 global.is_paused = false;
 global.current_frame = 0;
-global.hitboxes_enabled = false;
+global.debug_enabled = false;
 
-menu = undefined;
+pause_menu = undefined;
 
 global.player_exists = false;
 global.player = instance_find(Player, 0);
 if (global.player != noone) {
 	global.player_exists = true;
-}
-
-// called when level is finished (should be by LevelExit)
-function on_level_finish() {
-	// pop up menu or something
-	
 }
 
 function pause() {
@@ -39,15 +33,7 @@ function on_pause() {
 		_obj.disable(); 
 	}
 	
-	// spawn in pause menu
-	menu = instance_create_depth(x, y, -1000, Menu, {
-		"width": 50,
-		"height": 75,
-		"size_border": 4,
-		"line_height": 8,
-		"text_centered": true,
-		"options": [new MenuItem("resume", fnt_m3x6, 25, 8), new MenuItem("options", fnt_m3x6, 25, 8), new MenuItem("quit", fnt_m3x6, 25, 8)],
-	});
+	
 }
 
 function on_unpause() {
@@ -62,7 +48,28 @@ function on_unpause() {
 	}
 	
 	// destroy menu that definitely WAS created
-	if (instance_exists(Menu)) {
-		instance_destroy(menu);
+	if (instance_exists(pause_menu)) {
+		instance_destroy(pause_menu);
 	}
+}
+
+function on_level_complete() {
+	// call user_event(1) on every instance
+	for (var _i = 0; _i < instance_count; _i++) {
+		_obj = instance_id[_i];
+		with (_obj) {
+			event_user(1);
+		}
+	}
+}
+
+function on_player_die() {
+	pause();
+	instance_create_depth(250, 140, -1000, Menu, {
+		"width": 60,
+		"height": 35, 
+		"options": [ new MenuItem("reset", fnt_m3x6, 35-4, 8, level_restart) ],
+		"centered": true,
+		"title": "ded..",
+	});
 }

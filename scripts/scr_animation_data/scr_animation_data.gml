@@ -14,9 +14,10 @@ player_animations = {
 }
 
 level_exit_animations = {
-	cnt: 2,
+	cnt: 3,
 	"default":		animation_create("default", spr_bready_unspready, 75, 0, 0, false),
 	bounce:			animation_create("bounce", spr_bready_unspready, 75, 0, 14, true),
+	unite:			animation_create("unite", spr_bready_unitey, 75, 0, 5, true),
 }
 
 toaster_animations = {

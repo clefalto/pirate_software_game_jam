@@ -2,37 +2,39 @@
 
 // call every frame (TODO separate the player and the Character (bread) so that the Player object /sends/ data to the Character object)
 function detect_input() {
-	if (input_enabled) {
-		if (keyboard_check(vk_left) && keyboard_check(vk_right)) {
-			x_input = 0;
-		} else if (keyboard_check(vk_left)) {
-			x_input = -1;
-		} else if (keyboard_check(vk_right)) {
-			x_input = 1;
-		} else {
-			x_input = 0;
-		}
-		
-		jump_released_this_frame = false;
-	
-		if (keyboard_check(ord("Z"))) {
-			jump_held = true;
-			time_held_jump += 1;
-		} 
-	
-		if (keyboard_check_pressed(ord("Z"))) {
-			j_buffer = 4;
-			frame_j_pressed = global.current_frame;
-		}
-	
-		if (keyboard_check_released(ord("Z"))) {
-			if (time_held_jump > 0 && time_held_jump < 50 && y_speed < 0) {
-				ended_jump_early = true;
+	if (state == STATE.NORMAL) {
+		if (input_enabled) {
+			if (keyboard_check(vk_left) && keyboard_check(vk_right)) {
+				x_input = 0;
+			} else if (keyboard_check(vk_left)) {
+				x_input = -1;
+			} else if (keyboard_check(vk_right)) {
+				x_input = 1;
+			} else {
+				x_input = 0;
 			}
-			time_held_jump = 0;
-			jump_held = false;
+		
+			jump_released_this_frame = false;
+	
+			if (keyboard_check(ord("Z"))) {
+				jump_held = true;
+				time_held_jump += 1;
+			} 
+	
+			if (keyboard_check_pressed(ord("Z"))) {
+				j_buffer = 4;
+				frame_j_pressed = global.current_frame;
+			}
+	
+			if (keyboard_check_released(ord("Z"))) {
+				if (time_held_jump > 0 && time_held_jump < 50 && y_speed < 0) {
+					ended_jump_early = true;
+				}
+				time_held_jump = 0;
+				jump_held = false;
 			
-			jump_released_this_frame = true;
+				jump_released_this_frame = true;
+			}
 		}
 	}
 	else {
@@ -42,6 +44,7 @@ function detect_input() {
 		j_buffer = -1;
 		jump_released_this_frame = false;
 	}
+	
 }
 
 // call every frame
@@ -65,73 +68,81 @@ function update_flags() {
 
 // call every frame the player is in the air
 function calc_grav() {
-	if (ended_jump_early && y_speed < 0) {
-		grav_scale = 1.5;
-	}
-	var _grav = grav * grav_scale;
+	if (state == STATE.NORMAL) {
+		if (ended_jump_early && y_speed < 0) {
+			grav_scale = 1.5;
+		}
+		var _grav = grav * grav_scale;
 	
-	// framerate dependent B)
-	y_speed = appr(y_speed * global.time_scale, fall_max, _grav * global.time_scale);
+		// framerate dependent B)
+		y_speed = appr(y_speed * global.time_scale, fall_max, _grav * global.time_scale);
+	}
 }
 
 // call every frame
 function update_speed() {
-	var _target = 0;
-	var _move_accel = move_accel;
-	var _move_deccel = move_deccel;
-	var _move_max = move_max;
-	var _accel = _move_accel;
+	if (state == STATE.NORMAL) {
+		var _target = 0;
+		var _move_accel = move_accel;
+		var _move_deccel = move_deccel;
+		var _move_max = move_max;
+		var _accel = _move_accel;
 	
-	var _target_direction = x_input; // if not on the ground, this is x_input
-	if (is_grounded) _target_direction = 0;
+		var _target_direction = x_input; // if not on the ground, this is x_input
+		if (is_grounded) _target_direction = 0;
 	
-	// calculating True x_speed
-	if (abs(x_speed) > _move_max && _target_direction == sign(x_speed)) {
-		_target = _move_max;
-		if (!is_grounded) _accel = air_deccel;
-		else _accel = _move_deccel;
-	} else if (_target_direction != 0) {
-		_target = _move_max;
-	}
-	// framerate dependent B)
-	x_speed = appr(x_speed * global.time_scale, _target*_target_direction, _accel);
-	
-	// calculating desired_x_speed (what the speed Would be with the current x_input)
-	_target = 0;
-	_accel = _move_accel;
-	if (abs(desired_x_speed) > _move_max && x_input == sign(desired_x_speed)) {
-		_target = _move_max;
-		if (!is_grounded) _accel = air_deccel;
-		else _accel = _move_deccel;
-	} else if (x_input != 0) {
-		_target = _move_max;
-	}
-	desired_x_speed = appr(desired_x_speed * global.time_scale, _target*x_input, _accel);
-	
-	if (!is_grounded) {
-		self.calc_grav();
-		x_speed = desired_x_speed;
-	} 
-	
-	//if (j_buffer > 0) {
-	//	j_buffer -= 1;
-	//	if (is_grounded) {
-	//		self.jump();
-	//	}
-	//}
-	if (is_grounded) {
-		if (jump_held) {
-			if (!instance_exists(jump_meter)) {
-				jump_meter = instance_create_depth(x, y, 0, JamMeter);
-			}
-			charged_jump_force = clamp(charged_jump_force + 0.10, 0.0, charged_jump_max);
+		// calculating True x_speed
+		if (abs(x_speed) > _move_max && _target_direction == sign(x_speed)) {
+			_target = _move_max;
+			if (!is_grounded) _accel = air_deccel;
+			else _accel = _move_deccel;
+		} else if (_target_direction != 0) {
+			_target = _move_max;
 		}
+		// framerate dependent B)
+		x_speed = appr(x_speed * global.time_scale, _target*_target_direction, _accel);
 	
-		if (jump_released_this_frame) {
-			jump2();
-			if (instance_exists(jump_meter)) {
-				instance_destroy(jump_meter);
+		// calculating desired_x_speed (what the speed Would be with the current x_input)
+		_target = 0;
+		_accel = _move_accel;
+		if (abs(desired_x_speed) > _move_max && x_input == sign(desired_x_speed)) {
+			_target = _move_max;
+			if (!is_grounded) _accel = air_deccel;
+			else _accel = _move_deccel;
+		} else if (x_input != 0) {
+			_target = _move_max;
+		}
+		desired_x_speed = appr(desired_x_speed * global.time_scale, _target*x_input, _accel);
+	
+		if (!is_grounded) {
+			self.calc_grav();
+			x_speed = desired_x_speed;
+		} 
+	
+		//if (j_buffer > 0) {
+		//	j_buffer -= 1;
+		//	if (is_grounded) {
+		//		self.jump();
+		//	}
+		//}
+		if (is_grounded) {
+			if (jump_held) {
+				if (!instance_exists(jump_meter)) {
+					jump_meter = instance_create_depth(x, y, 0, JamMeter);
+				}
+				charged_jump_force = clamp(charged_jump_force + 0.10, 0.0, charged_jump_max);
 			}
+	
+			if (jump_released_this_frame) {
+				jump2();
+				if (instance_exists(jump_meter)) {
+					instance_destroy(jump_meter);
+				}
+			}
+		}
+		
+		if (bbox_bottom > room_height) {
+			on_player_die();
 		}
 	}
 }

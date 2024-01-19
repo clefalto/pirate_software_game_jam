@@ -6,6 +6,7 @@ animator = animator_create(global.player_animations);
 
 // create particle layer and system for player
 part_layer = layer_create(0, "particles");
+tile_overlay = layer_tilemap_get_id("tile_overlay");
 //part_system = part_system_create_layer(part_layer, false, ps_jam);
 
 // when spread meter reaches zero, must restart the level!
@@ -13,12 +14,15 @@ part_layer = layer_create(0, "particles");
 spread_meter = 100.0;
 spread_reduction_factor = 5;
 
-input_enabled = true;
-
 enum STATE {
 	NORMAL,
 	DEAD,
+	DISABLED
 }
+
+state = STATE.NORMAL;
+visible = true;
+input_enabled = true;
 
 #region internal physics Values (don't change these externally)
 
@@ -166,6 +170,60 @@ on_ground_collide = function() {
 		part_manager_create_particles(ps_jam_up, x, y, part_layer);
 	}
 	
+	// create jammed tiles at landing location, 3 tile width for middle (5 tile width in total)
+	var _tile_x = tilemap_get_cell_x_at_pixel(tile_overlay, x, bbox_bottom);
+	var _tile_y = tilemap_get_cell_y_at_pixel(tile_overlay, x, bbox_bottom);
+	
+	var _tile_far_left = clamp(_tile_x - 1, 0, tilemap_get_width(tile_overlay));
+	var _tile_far_right = clamp(_tile_x + 1, 0, tilemap_get_width(tile_overlay));
+	
+	// tiledata indices guide:
+	/*
+		0	1	2
+		3	4	5
+		6	7	8
+	*/
+	
+	// set far right and far left tiles
+	var _tiledata = tilemap_get(tile_overlay, _tile_far_left - 1, _tile_y);
+	var _solids_tiledata = tilemap_get(solids_layer, _tile_far_left - 1, _tile_y);
+	if (_solids_tiledata > 0 && _tiledata >= 0 && _tiledata != 4) {
+		var _data = tile_set_index(_tiledata, 3);
+		tilemap_set(tile_overlay, _data, _tile_far_left - 1, _tile_y);
+	}
+	
+	_tiledata = tilemap_get(tile_overlay, _tile_far_right + 1, _tile_y);
+	_solids_tiledata = tilemap_get(solids_layer, _tile_far_right + 1, _tile_y);
+	if (_solids_tiledata > 0 && _tiledata >= 0 && _tiledata != 4) {
+		var _data = tile_set_index(_tiledata, 5);
+		tilemap_set(tile_overlay, _data, _tile_far_right + 1, _tile_y);
+	}
+	
+	// iterate through all three tiles we care about
+	for (var _i = _tile_far_left; _i <= _tile_far_right; _i++) {
+		// set middle tile
+		
+		// tile above 
+		var _solids_tiledata_above = tilemap_get(solids_layer, _i, _tile_y - 1);
+		
+		// if there's a (nonzero) tile above this one, it doesn't make sense for the jam to jam
+		if (_solids_tiledata_above == 0) {
+			_solids_tiledata = tilemap_get(solids_layer, _i, _tile_y);
+			_tiledata = tilemap_get(tile_overlay, _i, _tile_y);
+			if (_solids_tiledata > 0 && _tiledata >= 0) {
+				var _data = tile_set_index(_tiledata, 4);
+				tilemap_set(tile_overlay, _data, _i, _tile_y);
+			}
+		
+			// set top tile
+			_tiledata = tilemap_get(tile_overlay, _i, _tile_y - 1);
+			if (_solids_tiledata > 0 && _solids_tiledata_above == 0 && _tiledata >= 0) {
+				var _data = tile_set_index(_tiledata, 1);
+				tilemap_set(tile_overlay, _data, _i, _tile_y - 1);
+			}
+		}
+	}
+	
 	// check if jump meter exists and you're not on the ground (means you were holding jump and slid off)
 	if (instance_exists(jump_meter)) {
 		instance_destroy(jump_meter);
@@ -201,6 +259,12 @@ on_leave_ground = function() {
 }
 
 #endregion
+
+function on_player_die() {
+	var _gm = instance_find(GameManager, 0);
+	
+	_gm.on_player_die();
+}
 
 // called to make player jump, this is also constantly called when the button is held down
 jump = function() {
