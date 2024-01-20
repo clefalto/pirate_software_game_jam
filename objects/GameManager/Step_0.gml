@@ -15,7 +15,7 @@ if (keyboard_check_pressed(vk_escape)) {
 			"size_border": 4,
 			"line_height": 8,
 			"text_centered": true,
-			"options": [new MenuItem("resume", fnt_m3x6, 25, 8, unpause), new MenuItem("options", fnt_m3x6, 25, 8), new MenuItem("quit", fnt_m3x6, 25, 8, game_end)],
+			"options": [new MenuItem("resume", fnt_m5x7, 25, 8, unpause), new MenuItem("options", fnt_m5x7, 25, 8), new MenuItem("quit", fnt_m5x7, 25, 8, game_end)],
 			"title": "paused",
 		});
 		pause();

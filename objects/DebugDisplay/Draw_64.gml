@@ -1,4 +1,4 @@
-draw_set_font(fnt_m3x6);
+draw_set_font(fnt_m5x7);
 
 if (global.debug_enabled) {
 	if (global.player_exists) {

@@ -128,7 +128,7 @@ function update_speed() {
 		if (is_grounded) {
 			if (jump_held) {
 				if (!instance_exists(jump_meter)) {
-					jump_meter = instance_create_depth(x, y, 0, JamMeter);
+					jump_meter = instance_create_depth(x, y, 0, JumpMeter);
 				}
 				charged_jump_force = clamp(charged_jump_force + 0.10, 0.0, charged_jump_max);
 			}

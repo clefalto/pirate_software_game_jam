@@ -68,7 +68,7 @@ function on_player_die() {
 	instance_create_depth(250, 140, -1000, Menu, {
 		"width": 60,
 		"height": 35, 
-		"options": [ new MenuItem("reset", fnt_m3x6, 35-4, 8, level_restart) ],
+		"options": [ new MenuItem("reset", fnt_m5x7, 35-4, 8, level_restart) ],
 		"centered": true,
 		"title": "ded..",
 	});

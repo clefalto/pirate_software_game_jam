@@ -17,9 +17,10 @@ if (title != "") {
 		_adj_text_orig_x += (width - size_border*2)/2 - string_width(title)/2 - 6;
 	}
 	
+	draw_set_font(font);
 	draw_text(_adj_text_orig_x, _text_orig_y, title);
 	
-	_text_orig_y += font_get_size(fnt_m3x6) + 3;
+	_text_orig_y += font_get_size(font) + 3;
 	
 }
 
@@ -53,13 +54,13 @@ for (var i = 0; i < array_length(options); i++) {
 	
 	
 	if (selected == i) {
-		draw_set_font(fnt_m3x6);
+		draw_set_font(font);
 		draw_text(_adj_text_orig_x - 5, _text_orig_y, ">");
 		if (keyboard_check_pressed(ord("Z"))) {
 			options[selected].call_callback();
 		}
 	}
-	_text_orig_y += font_get_size(fnt_m3x6);
+	_text_orig_y += font_get_size(font);
 }
 
 if (keyboard_check_pressed(vk_down)) {

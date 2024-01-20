@@ -18,7 +18,7 @@ function animator_create(_animations = undefined) {
 function animator_increase_frame(_animator) {
 	var _current_animation = _animator.current_animation;
 	if (!is_undefined(_current_animation)) {
-		if (_animator.current_frame + 1 >= animation_get_last(_current_animation)) {
+		if (_animator.current_frame >= animation_get_last(_current_animation)) {
 			if (_animator.loop) {
 				_animator.current_frame = animation_get_first(_current_animation);
 			}
@@ -71,6 +71,7 @@ function animator_set_animation(_animator, _animation, _on_animation_end = undef
 				_animator.disable_auto_update = false;
 				_animator.on_animation_end = _on_animation_end;
 				_animator.loop = !_animator.current_animation.one_shot
+				_animator.current_frame = _animator.animations[$ _animation].first;
 				
 				return true;
 			}

@@ -20,9 +20,10 @@ self[$ "height"] ??= 16;
 self[$ "size_border"] ??= 4;
 self[$ "line_height"] ??= 8;
 self[$ "text_centered"] ??= false;
-self[$ "options"] ??= [new MenuItem("no options...", fnt_m3x6, width - size_border*2, line_height)];
+self[$ "options"] ??= [new MenuItem("no options...", fnt_m5x7, width - size_border*2, line_height)];
 self[$ "centered"] ??= true;
 self[$ "title"] ??= "";
+self[$ "font"] ??= fnt_m5x7
 
 if (centered) {
 	// center before centering in drawgui
