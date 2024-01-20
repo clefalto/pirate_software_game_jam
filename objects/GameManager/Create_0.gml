@@ -63,13 +63,13 @@ function on_level_complete() {
 	}
 }
 
-function on_player_die() {
+function on_player_die(_message = "ded") {
 	pause();
 	instance_create_depth(250, 140, -1000, Menu, {
-		"width": 60,
+		"width": 70,
 		"height": 35, 
-		"options": [ new MenuItem("reset", fnt_m5x7, 35-4, 8, level_restart) ],
+		"options": [ new MenuItem("restart..", fnt_m5x7, 35-4, 8, level_restart) ],
 		"centered": true,
-		"title": "ded..",
+		"title": _message,
 	});
 }

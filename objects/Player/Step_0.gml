@@ -127,6 +127,10 @@ function update_speed() {
 		//}
 		if (is_grounded) {
 			if (jump_held) {
+				if (animator_get_animation(animator) != "squish") {
+					animator_set_animation(animator, "squish");
+					animator_disable_auto_update(animator);
+				}
 				if (!instance_exists(jump_meter)) {
 					jump_meter = instance_create_depth(x, y, 0, JumpMeter);
 				}
@@ -142,7 +146,7 @@ function update_speed() {
 		}
 		
 		if (bbox_bottom > room_height) {
-			on_player_die();
+			on_player_die("ded..");
 		}
 	}
 }
@@ -173,6 +177,13 @@ function update_animation() {
 	
 	}
 	
+	if (animator_get_animation(animator) == "squish") {
+		// increase frame only when we're halfway done charging
+		if (charged_jump_force/charged_jump_max >= 0.5 && (animator.current_frame != animation_get_last(animator.current_animation))) {
+			animator_increase_frame(animator);
+		}
+	}
+	
 	animator_update(animator);
 }
 
@@ -181,6 +192,10 @@ if (is_enabled) {
 	self.detect_input();
 	self.update_speed();
 	self.update_animation();
+	
+	if (spread_meter <= 0.0 && x_speed == 0 && is_grounded && y_speed == 0.0) {
+		on_player_die("unjammed..");
+	}
 	
 	// move is called in event_inherited (above)
 }

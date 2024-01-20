@@ -10,9 +10,8 @@ if (keyboard_check_pressed(vk_escape)) {
 	if (!global.is_paused) {
 		// spawn in pause menu
 		pause_menu = instance_create_depth(x, y, -1000, Menu, {
-			"width": 50,
+			"width": 60,
 			"height": 75,
-			"size_border": 4,
 			"line_height": 8,
 			"text_centered": true,
 			"options": [new MenuItem("resume", fnt_m5x7, 25, 8, unpause), new MenuItem("options", fnt_m5x7, 25, 8), new MenuItem("quit", fnt_m5x7, 25, 8, game_end)],

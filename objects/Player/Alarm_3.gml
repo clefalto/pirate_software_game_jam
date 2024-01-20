@@ -1,0 +1,1 @@
+grav_scale = 1.0;

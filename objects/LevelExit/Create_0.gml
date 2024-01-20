@@ -15,9 +15,10 @@ function anim_normal() {
 self.anim_normal();
 alarm[0] = bounce_intermittence;
 self.enable();
+self.enable_physics();
 
 function anim_unite_complete() {
-	animator_disable_auto_update(animator); // keep frame locked at the unite one
+	// animator_disable_auto_update(animator); // keep frame locked at the unite one
 	alarm[0] = -1;
 	self.disable();
 }

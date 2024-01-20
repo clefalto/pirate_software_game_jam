@@ -1,6 +1,7 @@
 // PLAYER_CREATE
 
 event_inherited();
+enable_physics(); // enabled physics on create
 
 animator = animator_create(global.player_animations);
 
@@ -97,7 +98,7 @@ on_y_collide = function(_x, _y) { // @override
 }
 
 function check_collide_ground() {
-	for (var _i = bbox_left + 1; _i < bbox_right; _i++) {
+	for (var _i = bbox_left; _i < bbox_right; _i++) {
 		if (tilemap_get_at_pixel(solids_layer, _i, bbox_bottom) != 0) {
 			return true;
 		}
@@ -106,7 +107,7 @@ function check_collide_ground() {
 }
 
 function check_collide_ceil() {
-	for (var _i = bbox_left + 1; _i < bbox_right; _i++) {
+	for (var _i = bbox_left; _i < bbox_right; _i++) {
 		if (tilemap_get_at_pixel(solids_layer, _i, bbox_top - 1) != 0) {
 			return true;
 		}
@@ -153,11 +154,6 @@ on_ground_collide = function() {
 	var _seconds_in_air = air_time_frames/game_get_speed(gamespeed_fps);
 	var _percent_fall_speed = y_speed/fall_max;
 	
-	// check if spread meter is depleted
-	if (spread_meter <= 0.0) {
-		
-	}
-	
 	y_speed = 0.0;
 	
 	ended_jump_early = false;
@@ -168,60 +164,103 @@ on_ground_collide = function() {
 	// create jam burst particles at landing spot!
 	if (global.current_frame >= 3) {
 		part_manager_create_particles(ps_jam_up, x, y, part_layer);
-	}
-	
-	// create jammed tiles at landing location, 3 tile width for middle (5 tile width in total)
-	var _tile_x = tilemap_get_cell_x_at_pixel(tile_overlay, x, bbox_bottom);
-	var _tile_y = tilemap_get_cell_y_at_pixel(tile_overlay, x, bbox_bottom);
-	
-	var _tile_far_left = clamp(_tile_x - 1, 0, tilemap_get_width(tile_overlay));
-	var _tile_far_right = clamp(_tile_x + 1, 0, tilemap_get_width(tile_overlay));
-	
-	// tiledata indices guide:
-	/*
-		0	1	2
-		3	4	5
-		6	7	8
-	*/
-	
-	// set far right and far left tiles
-	var _tiledata = tilemap_get(tile_overlay, _tile_far_left - 1, _tile_y);
-	var _solids_tiledata = tilemap_get(solids_layer, _tile_far_left - 1, _tile_y);
-	if (_solids_tiledata > 0 && _tiledata >= 0 && _tiledata != 4) {
-		var _data = tile_set_index(_tiledata, 3);
-		tilemap_set(tile_overlay, _data, _tile_far_left - 1, _tile_y);
-	}
-	
-	_tiledata = tilemap_get(tile_overlay, _tile_far_right + 1, _tile_y);
-	_solids_tiledata = tilemap_get(solids_layer, _tile_far_right + 1, _tile_y);
-	if (_solids_tiledata > 0 && _tiledata >= 0 && _tiledata != 4) {
-		var _data = tile_set_index(_tiledata, 5);
-		tilemap_set(tile_overlay, _data, _tile_far_right + 1, _tile_y);
-	}
-	
-	// iterate through all three tiles we care about
-	for (var _i = _tile_far_left; _i <= _tile_far_right; _i++) {
-		// set middle tile
 		
-		// tile above 
-		var _solids_tiledata_above = tilemap_get(solids_layer, _i, _tile_y - 1);
+		#region create splatter tiles
+		// create jammed tiles at landing location, 3 tile width for middle (5 tile width in total)
 		
-		// if there's a (nonzero) tile above this one, it doesn't make sense for the jam to jam
-		if (_solids_tiledata_above == 0) {
-			_solids_tiledata = tilemap_get(solids_layer, _i, _tile_y);
-			_tiledata = tilemap_get(tile_overlay, _i, _tile_y);
-			if (_solids_tiledata > 0 && _tiledata >= 0) {
-				var _data = tile_set_index(_tiledata, 4);
-				tilemap_set(tile_overlay, _data, _i, _tile_y);
+		// get landing tile
+		var _tile_x = tilemap_get_cell_x_at_pixel(tile_overlay, x, bbox_bottom);
+		var _tile_y = tilemap_get_cell_y_at_pixel(tile_overlay, x, bbox_bottom);
+		
+		// bounds
+		var _tile_far_left = clamp(_tile_x - 1, 0, tilemap_get_width(tile_overlay));
+		var _tile_far_right = clamp(_tile_x + 1, 0, tilemap_get_width(tile_overlay));
+		
+		var _tiledata_center = tilemap_get(solids_layer, _tile_x, _tile_y);
+		var _tiledata_left = tilemap_get(solids_layer, _tile_far_left, _tile_y);
+		var _tiledata_right = tilemap_get(solids_layer, _tile_far_right, _tile_y);
+		
+		// check if the tile on the far left is not solid or oob,
+		// if so, set the left tile to the tile we landed on
+		
+		if (_tiledata_center <= 0) {
+			if (_tiledata_left <= 0) {
+				_tile_x = _tile_far_right;
 			}
-		
-			// set top tile
-			_tiledata = tilemap_get(tile_overlay, _i, _tile_y - 1);
-			if (_solids_tiledata > 0 && _solids_tiledata_above == 0 && _tiledata >= 0) {
-				var _data = tile_set_index(_tiledata, 1);
-				tilemap_set(tile_overlay, _data, _i, _tile_y - 1);
+			else if (_tiledata_right <= 0) {
+				_tile_x = _tile_far_left;
 			}
 		}
+		
+		if (_tiledata_left <= 0) {
+			_tile_far_left = _tile_x;
+		}
+		
+		// same as above for tile on far right
+		
+		if (_tiledata_right <= 0) {
+			_tile_far_right = _tile_x;
+		}
+		
+		
+	
+		// tiledata indices guide:
+		/*
+			0	1	2
+			3	4	5
+			6	7	8
+		*/
+	
+		// set far right and far left tiles
+		
+	
+		// tile above, if there is a tile above don't place splatter bc that wouldn't make sense
+		var _solids_tiledata_above = tilemap_get(solids_layer, _tile_far_left - 1, _tile_y - 1);
+	
+		// far far left tile (little bit that goes over to the next tile)
+		var _tiledata = tilemap_get(tile_overlay, _tile_far_left - 1, _tile_y);
+		var _solids_tiledata = tilemap_get(solids_layer, _tile_far_left - 1, _tile_y);
+		if (_solids_tiledata >= 0 && _tiledata == 0 && _solids_tiledata_above == 0) {
+			var _data = tile_set_index(_tiledata, 3);
+			tilemap_set(tile_overlay, _data, _tile_far_left - 1, _tile_y);
+		}
+		
+		
+		_solids_tiledata_above = tilemap_get(solids_layer, _tile_far_right + 1, _tile_y - 1);
+	
+		// far far right tile
+		_tiledata = tilemap_get(tile_overlay, _tile_far_right + 1, _tile_y);
+		_solids_tiledata = tilemap_get(solids_layer, _tile_far_right + 1, _tile_y);
+		if (_solids_tiledata >= 0 && _tiledata == 0 && _solids_tiledata_above == 0) {
+			var _data = tile_set_index(_tiledata, 5);
+			tilemap_set(tile_overlay, _data, _tile_far_right + 1, _tile_y);
+		}
+	
+		// iterate through all three tiles we care about
+		for (var _i = _tile_far_left; _i <= _tile_far_right; _i++) {
+			// set middle tile
+		
+			// tile above 
+			_solids_tiledata_above = tilemap_get(solids_layer, _i, _tile_y - 1);
+		
+			// if there's a (nonzero) tile above this one, it doesn't make sense for the jam to jam
+			if (_solids_tiledata_above == 0) {
+				_solids_tiledata = tilemap_get(solids_layer, _i, _tile_y);
+				_tiledata = tilemap_get(tile_overlay, _i, _tile_y);
+				if (_solids_tiledata > 0 && _tiledata >= 0) {
+					var _data = tile_set_index(_tiledata, 4);
+					tilemap_set(tile_overlay, _data, _i, _tile_y);
+				}
+		
+				// set top tile
+				_tiledata = tilemap_get(tile_overlay, _i, _tile_y - 1);
+				if (_solids_tiledata > 0 && _solids_tiledata_above == 0 && _tiledata >= 0) {
+					var _data = tile_set_index(_tiledata, 1);
+					tilemap_set(tile_overlay, _data, _i, _tile_y - 1);
+				}
+			}
+		}
+		#endregion
 	}
 	
 	// check if jump meter exists and you're not on the ground (means you were holding jump and slid off)
@@ -260,16 +299,16 @@ on_leave_ground = function() {
 
 #endregion
 
-function on_player_die() {
+function on_player_die(_message = "ded") {
 	var _gm = instance_find(GameManager, 0);
 	
-	_gm.on_player_die();
+	_gm.on_player_die(_message);
 }
 
-// called to make player jump, this is also constantly called when the button is held down
-jump = function() {
-	y_speed = -jump_force;
-}
+//// called to make player jump, this is also constantly called when the button is held down
+//jump = function() {
+//	y_speed = -jump_force;
+//}
 
 function jump2() {
 	y_speed = -charged_jump_force;
@@ -293,7 +332,7 @@ is_on_floor = function() {
 // decrease spread meter, called when hitting the ground. 
 reduce_spread_meter = function(_amount) {
 	// so that you don't die instantly when falling too fast
-	if (_amount > 50.0) _amount = 50.0;
+	if (_amount > 25.0) _amount = 25.0;
 	spread_meter = clamp(spread_meter - _amount, 0.0, 100.0);
 }
 
@@ -309,3 +348,12 @@ on_anim_finish_air_initial_jump = function() {
 	animator_set_animation(animator, "air_spin");
 	animator_disable_auto_update(animator);
 }
+
+// disable gravity for the player for _length frames
+function disable_gravity(_length = 60) {
+	grav_scale = 0.0;
+	alarm[3] = _length;
+}
+
+// actual creation Code Steps
+enable();

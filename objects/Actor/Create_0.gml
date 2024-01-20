@@ -13,6 +13,7 @@
 #endregion
 
 is_enabled = false;
+physics_enabled = false;
 
 x_speed = 0.0;
 y_speed = 0.0;
@@ -35,6 +36,14 @@ disable = function() {
 
 function set_solid_layer(_layer_name) {
 	solids_layer = layer_tilemap_get_id(_layer_name);
+}
+
+function disable_physics() {
+	physics_enabled = false;
+}
+
+function enable_physics() {
+	physics_enabled = true;
 }
 
 /* ACTOR

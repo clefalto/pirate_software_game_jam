@@ -17,7 +17,7 @@
 
 self[$ "width"] ??= 16;
 self[$ "height"] ??= 16;
-self[$ "size_border"] ??= 4;
+self[$ "size_border"] ??= 6;
 self[$ "line_height"] ??= 8;
 self[$ "text_centered"] ??= false;
 self[$ "options"] ??= [new MenuItem("no options...", fnt_m5x7, width - size_border*2, line_height)];

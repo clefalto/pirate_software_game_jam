@@ -1,9 +1,9 @@
-num_levels_ = 2;
 current_level_ = 0;
 
 // name: level number -> room that corresponds to it
 // this is populated MANUALLY EWWW
-level2room_ = [3, 4];
+level2room_ = [4, 5, 6, 7, 8, 9, 10];
+num_levels_ = array_length(level2room_);
 
 // GLOBAL VARIABLES AAAAAAAAAAAAAAAAAAAAAAAGHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 function level_get_current_level() {
@@ -23,6 +23,7 @@ function level_restart() {
 function level_switch(_level_index) {
 	if (_level_index == global.current_level_) {
 		level_restart();
+		show_debug_message("level switched to " + string(_level_index));
 		return true;
 	}
 	else if (_level_index >= global.num_levels_ || _level_index < 0) {
@@ -53,4 +54,10 @@ function level_add(_room_index) {
 	array_push(global.level2room_, _room_index);
 	global.num_levels_++;
 	return true;
+}
+
+function level_game_start() {
+	global.current_level_ = 0;
+	level_switch(global.current_level_);
+	show_debug_message("game starting");
 }
