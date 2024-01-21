@@ -6,6 +6,10 @@ global.debug_enabled = false;
 
 pause_menu = undefined;
 
+global.all_tiles_spreaded = false;
+instance_create_depth(0, 0, 0, UnlockableTileManager);
+
+
 global.player_exists = false;
 global.player = instance_find(Player, 0);
 if (global.player != noone) {

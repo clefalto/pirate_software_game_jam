@@ -22,9 +22,14 @@ level_exit_animations = {
 }
 
 toaster_animations = {
-	cnt: 2,
+	cnt: 4,
 	"default":		animation_create("default", spr_toaster, 75, 0, 0, false),
 	absorb:			animation_create("absorb", spr_toaster, 75, 1, 8, false),
 	fling:			animation_create("fling", spr_toaster, 100, 9, 9, true),
 	used:			animation_create("used", spr_toaster, 75, 10, 10, false),
+}
+
+baby_animations = {
+	cnt: 1,
+	"default":		animation_create("spin", spr_bready_smally, 100, 0, 7, false),
 }

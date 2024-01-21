@@ -13,7 +13,7 @@ tile_overlay = layer_tilemap_get_id("tile_overlay");
 // when spread meter reaches zero, must restart the level!
 // reduce spread meter by 
 spread_meter = 100.0;
-spread_reduction_factor = 5;
+spread_reduction_factor = 4.5;
 
 enum STATE {
 	NORMAL,
@@ -99,7 +99,7 @@ on_y_collide = function(_x, _y) { // @override
 
 function check_collide_ground() {
 	for (var _i = bbox_left; _i < bbox_right; _i++) {
-		if (tilemap_get_at_pixel(solids_layer, _i, bbox_bottom) != 0) {
+		if (tilemap_get_at_pixel(solids_layer, _i, bbox_bottom) != 0 || tilemap_get_at_pixel(spreadables_layer, _i, bbox_bottom) != 0) {
 			return true;
 		}
 	}
@@ -108,7 +108,7 @@ function check_collide_ground() {
 
 function check_collide_ceil() {
 	for (var _i = bbox_left; _i < bbox_right; _i++) {
-		if (tilemap_get_at_pixel(solids_layer, _i, bbox_top - 1) != 0) {
+		if (tilemap_get_at_pixel(solids_layer, _i, bbox_top - 1) != 0 || tilemap_get_at_pixel(spreadables_layer, _i, bbox_top - 1) != 0) {
 			return true;
 		}
 	}
@@ -117,7 +117,7 @@ function check_collide_ceil() {
 
 function check_collide_left_wall() {
 	for (var _i = bbox_top; _i < bbox_bottom; _i++) {
-		if (tilemap_get_at_pixel(solids_layer, bbox_left - 1, _i) != 0) {
+		if (tilemap_get_at_pixel(solids_layer, bbox_left - 1, _i) != 0 || tilemap_get_at_pixel(spreadables_layer, bbox_left - 1, _i) != 0) {
 			return true;
 		}
 	}
@@ -126,7 +126,7 @@ function check_collide_left_wall() {
 
 function check_collide_right_wall() {
 	for (var _i = bbox_top; _i < bbox_bottom; _i++) {
-		if (tilemap_get_at_pixel(solids_layer, bbox_right, _i) != 0) {
+		if (tilemap_get_at_pixel(solids_layer, bbox_right, _i) != 0 || tilemap_get_at_pixel(spreadables_layer, bbox_right, _i) != 0) {
 			return true;
 		}
 	}
@@ -171,6 +171,9 @@ on_ground_collide = function() {
 		// get landing tile
 		var _tile_x = tilemap_get_cell_x_at_pixel(tile_overlay, x, bbox_bottom);
 		var _tile_y = tilemap_get_cell_y_at_pixel(tile_overlay, x, bbox_bottom);
+		
+		//var _tile_x_spreadables = tilemap_get_cell_x_at_pixel(spreadables_layer, x, bbox_bottom);
+		//var _tile_y_spreadables = tilemap_get_cell_y_at_pixel(spreadables_layer, x, bbox_bottom);
 		
 		// bounds
 		var _tile_far_left = clamp(_tile_x - 1, 0, tilemap_get_width(tile_overlay));
@@ -321,7 +324,7 @@ function jump2() {
 // check if the player is on the floor, by checking 1 px below it on the far left and far right
 is_on_floor = function() {
 	for (var _i = bbox_left; _i < bbox_right; _i++) {
-		if (tilemap_get_at_pixel(solids_layer, _i, bbox_bottom)) {
+		if (tilemap_get_at_pixel(solids_layer, _i, bbox_bottom) != 0 || tilemap_get_at_pixel(spreadables_layer, _i, bbox_bottom) != 0) {
 			return true;
 		}
 	}
@@ -332,7 +335,7 @@ is_on_floor = function() {
 // decrease spread meter, called when hitting the ground. 
 reduce_spread_meter = function(_amount) {
 	// so that you don't die instantly when falling too fast
-	if (_amount > 25.0) _amount = 25.0;
+	if (_amount > 20.0) _amount = 20.0;
 	spread_meter = clamp(spread_meter - _amount, 0.0, 100.0);
 }
 

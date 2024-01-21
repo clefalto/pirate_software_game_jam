@@ -8,8 +8,10 @@
 
 if (self.is_enabled) {
 	// activate player reach exit event (user event 1)
-	event_user(1);
+	if (global.all_tiles_spreaded) {
+		event_user(1);
 	
-	var _gm = instance_find(GameManager, 0);
-	_gm.on_level_complete();
+		var _gm = instance_find(GameManager, 0);
+		_gm.on_level_complete();
+	}
 }

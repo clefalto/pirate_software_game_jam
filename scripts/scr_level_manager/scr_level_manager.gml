@@ -2,8 +2,10 @@ current_level_ = 0;
 
 // name: level number -> room that corresponds to it
 // this is populated MANUALLY EWWW
-level2room_ = [4, 5, 6, 7, 8, 9, 10];
+level2room_ = [4, 6, 12, 5, 7, 8, 9, 10, 11];
 num_levels_ = array_length(level2room_);
+
+
 
 // GLOBAL VARIABLES AAAAAAAAAAAAAAAAAAAAAAAGHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 function level_get_current_level() {

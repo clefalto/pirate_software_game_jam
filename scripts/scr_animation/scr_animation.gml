@@ -1,3 +1,5 @@
+#macro TAU pi*2
+
 function animation_create(_name, _sprite, _frame_duration, _first, _last, _one_shot = false) {
 	return {
 		name_: _name,

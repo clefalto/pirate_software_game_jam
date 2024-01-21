@@ -3,6 +3,15 @@ event_inherited();
 animator = animator_create(global.level_exit_animations);
 bounce_intermittence = 120 // frames
 
+baby_index = 0;
+baby_radius = 15; // px
+baby_elapsed_time = 0.0;
+
+baby_origin_x = 1;
+baby_origin_y = 0;
+
+baby_sprite = spr_bready_smally;
+
 
 function anim_bounce() {
 	animator_set_animation(animator, "bounce", anim_normal);

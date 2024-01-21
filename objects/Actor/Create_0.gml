@@ -25,6 +25,13 @@ rotation = 0.0;
 animator = animator_create();
 
 solids_layer = layer_tilemap_get_id("solids");
+if (layer_exists("spreadables")) {
+	spreadables_layer = layer_tilemap_get_id("spreadables");
+}
+else {
+	spreadables_layer = solids_layer;
+}
+
 
 enable = function() {
 	is_enabled = true;
@@ -34,7 +41,7 @@ disable = function() {
 	is_enabled = false;
 }
 
-function set_solid_layer(_layer_name) {
+function set_solids_layer(_layer_name) {
 	solids_layer = layer_tilemap_get_id(_layer_name);
 }
 
@@ -64,7 +71,7 @@ function move_x(_collision_layer, _amount, _on_collide) {
 		while (_x_move != 0) {
 			var _location_x = x + _sign;
 			var _location_y = y;
-			var _collision = collide_at(_collision_layer, _location_x, _location_y);
+			var _collision = collide_at(solids_layer, _location_x, _location_y) || collide_at(spreadables_layer, _location_x, _location_y);
 			if (!_collision) {
 				x += _sign;
 				_x_move -= _sign;
@@ -93,7 +100,7 @@ function move_y(_collision_layer, _amount, _on_collide) {
 		while (_y_move != 0) {
 			var _location_x = x;
 			var _location_y = y + _sign;
-			var _collision = collide_at(_collision_layer, _location_x, _location_y);
+			var _collision = collide_at(solids_layer, _location_x, _location_y) || collide_at(spreadables_layer, _location_x, _location_y);
 			if (!_collision) {
 				y += _sign;
 				_y_move -= _sign;
@@ -131,20 +138,20 @@ function collide_at(_collision_layer, _x_pos, _y_pos) {
 	// check all sides of bbox
 	// check top and bottom sides of rectangle
 	for (var _i = _x_min; _i <= _x_max; _i++) {
-		if (tilemap_get_at_pixel(_collision_layer, _i, _y_min) != 0) {
+		if (tilemap_get_at_pixel(solids_layer, _i, _y_min) != 0 || tilemap_get_at_pixel(spreadables_layer, _i, _y_min) != 0) {
 			return true;
 		}
-		if (tilemap_get_at_pixel(_collision_layer, _i, _y_max) != 0) {
+		if (tilemap_get_at_pixel(solids_layer, _i, _y_max) != 0 || tilemap_get_at_pixel(spreadables_layer, _i, _y_max) != 0) {
 			return true;
 		}
 	}
 	
 	// check left and right sides of rectangle
 	for (var _i = _y_min; _i <= _y_max; _i++) {
-		if (tilemap_get_at_pixel(_collision_layer, _x_min, _i) != 0) {
+		if (tilemap_get_at_pixel(solids_layer, _x_min, _i) != 0 || tilemap_get_at_pixel(spreadables_layer, _x_min, _i) != 0) {
 			return true;
 		}
-		if (tilemap_get_at_pixel(_collision_layer, _x_max, _i) != 0) {
+		if (tilemap_get_at_pixel(solids_layer, _x_max, _i) != 0 || tilemap_get_at_pixel(spreadables_layer, _x_max, _i) != 0) {
 			return true;
 		}
 	}
