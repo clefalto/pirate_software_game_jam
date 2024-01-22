@@ -32,7 +32,8 @@ else {
 function check_spreadables_spreaded() {
 	for (var _i = 0; _i < array_length(spreadable_tiles); _i++) {
 		// show_debug_message("checking spreadables spreaded");
-		if (tilemap_get(overlay, array_get(spreadable_tiles_x, _i), array_get(spreadable_tiles_y, _i)) > 0) {
+		var _tiledata = tilemap_get(overlay, array_get(spreadable_tiles_x, _i), array_get(spreadable_tiles_y, _i));
+		if (_tiledata == 4) {
 			array_delete(spreadable_tiles, _i, 1);
 			array_delete(spreadable_tiles_x, _i, 1);
 			array_delete(spreadable_tiles_y, _i, 1);
@@ -40,6 +41,7 @@ function check_spreadables_spreaded() {
 			
 			if (global.num_spreadable_tiles == 0) {
 				global.all_tiles_spreaded = true;
+				audio_play_sound(snd_unlock_2, 10, false);
 			}
 		}
 	}

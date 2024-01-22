@@ -11,3 +11,5 @@ if (global.player_exists) {
 	draw_sprite_stretched(spr_jam_meter_inside, 0, _x + 2, _y + 2, _player.spread_meter - 4, _height - 3);
 	draw_sprite_stretched(spr_jam_meter_border, 0, _x, _y, 100, _height);
 }
+
+timer_draw(270, 0);

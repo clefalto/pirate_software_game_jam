@@ -145,8 +145,8 @@ function update_speed() {
 			}
 		}
 		
-		if (bbox_bottom > room_height) {
-			on_player_die("ded..");
+		if (bbox_bottom + 1 >= room_height) {
+			on_player_die();
 		}
 	}
 }

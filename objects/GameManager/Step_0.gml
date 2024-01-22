@@ -29,3 +29,5 @@ if (keyboard_check_pressed(vk_escape)) {
 if (!global.is_paused) {
 	part_manager_update_particles();
 }
+
+timer_update();

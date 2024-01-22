@@ -1,8 +1,8 @@
-current_level_ = 0;
+current_level_ = -1;
 
 // name: level number -> room that corresponds to it
 // this is populated MANUALLY EWWW
-level2room_ = [4, 6, 12, 5, 7, 8, 9, 10, 11];
+level2room_ = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
 num_levels_ = array_length(level2room_);
 
 
@@ -20,6 +20,7 @@ function level_restart() {
 	if (!is_undefined(global.current_level_)) {
 		room_goto(global.level2room_[global.current_level_]);
 	}
+	audio_stop_all();
 }
 
 function level_switch(_level_index) {

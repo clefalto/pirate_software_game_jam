@@ -7,3 +7,5 @@ instance_create_depth(250, 140, -1000, Menu, {
 	"centered": false,
 	"title": "complete!",
 });
+
+timer_pause();

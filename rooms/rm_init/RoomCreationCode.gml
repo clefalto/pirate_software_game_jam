@@ -11,4 +11,4 @@ for (var _i = 1; room_exists(_i); _i++) {
 }
 
 // go to title room
-room_goto_next();
+room_goto(2);

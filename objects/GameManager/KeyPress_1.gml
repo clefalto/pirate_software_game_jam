@@ -1,5 +1,5 @@
 if (keyboard_check_pressed(ord("0"))) {
-	room_goto(1);
+	room_goto(3);
 }
 
 if (keyboard_check_pressed(ord("R"))) {

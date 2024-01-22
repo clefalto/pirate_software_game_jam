@@ -183,8 +183,12 @@ on_ground_collide = function() {
 		var _tiledata_left = tilemap_get(solids_layer, _tile_far_left, _tile_y);
 		var _tiledata_right = tilemap_get(solids_layer, _tile_far_right, _tile_y);
 		
+		
+		
 		// check if the tile on the far left is not solid or oob,
 		// if so, set the left tile to the tile we landed on
+		
+		
 		
 		if (_tiledata_center <= 0) {
 			if (_tiledata_left <= 0) {
@@ -202,6 +206,18 @@ on_ground_collide = function() {
 		// same as above for tile on far right
 		
 		if (_tiledata_right <= 0) {
+			_tile_far_right = _tile_x;
+		}
+		
+		var _tiledata_center_above = tilemap_get(solids_layer, _tile_x, _tile_y - 1);
+		var _tiledata_left_above = tilemap_get(solids_layer, _tile_far_left, _tile_y - 1);
+		var _tiledata_right_above = tilemap_get(solids_layer, _tile_far_right, _tile_y - 1);
+		
+		if (_tiledata_left_above > 0) {
+			_tile_far_left = _tile_x;
+		}
+		
+		if (_tiledata_right_above > 0) {
 			_tile_far_right = _tile_x;
 		}
 		
@@ -270,8 +286,14 @@ on_ground_collide = function() {
 	if (instance_exists(jump_meter)) {
 		instance_destroy(jump_meter);
 	}
+	
+	// cosmetic effects
 	// start playing grounded animation when hitting the ground
 	animator_set_animation(animator, "default");
+	if (global.current_frame >= 3) {
+		// play landing nouise
+		audio_play_sound(snd_land_2, 10, false, 0.8, 0, 1.2);
+	}		
 }
 
 on_ceil_collide = function() {
@@ -302,7 +324,7 @@ on_leave_ground = function() {
 
 #endregion
 
-function on_player_die(_message = "ded") {
+function on_player_die(_message = "you're toast") {
 	var _gm = instance_find(GameManager, 0);
 	
 	_gm.on_player_die(_message);
@@ -318,7 +340,12 @@ function jump2() {
 	x_speed += charged_jump_force * x_input * 0.2;
 	desired_x_speed += charged_jump_force * x_input * 0.2;
 	reduce_spread_meter(charged_jump_force * spread_reduction_factor);
+	
+	audio_play_sound(snd_jump, 10, false, 1, 0, 0.75 + charged_jump_force/charged_jump_max);
+	
 	charged_jump_force = 0.0;
+	
+	
 }
 
 // check if the player is on the floor, by checking 1 px below it on the far left and far right
