@@ -1,4 +1,5 @@
 /// @desc GAME MANAGER CREATE EVENT
+check_z_down_room_start();
 
 global.is_paused = false;
 global.current_frame = 0;

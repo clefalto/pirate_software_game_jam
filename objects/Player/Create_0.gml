@@ -1,5 +1,9 @@
 // PLAYER_CREATE
 
+
+input_enabled = true;
+//alarm[2] = 20;
+
 event_inherited();
 enable_physics(); // enabled physics on create
 
@@ -23,7 +27,6 @@ enum STATE {
 
 state = STATE.NORMAL;
 visible = true;
-input_enabled = true;
 
 #region internal physics Values (don't change these externally)
 
@@ -342,6 +345,7 @@ function jump2() {
 	reduce_spread_meter(charged_jump_force * spread_reduction_factor);
 	
 	audio_play_sound(snd_jump, 10, false, 1, 0, 0.75 + charged_jump_force/charged_jump_max);
+	stats_add_jump();
 	
 	charged_jump_force = 0.0;
 	

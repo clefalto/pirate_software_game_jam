@@ -1,8 +1,10 @@
+is_in_debug_mode = true;
+
 current_level_ = -1;
 
 // name: level number -> room that corresponds to it
 // this is populated MANUALLY EWWW
-level2room_ = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+level2room_ = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
 num_levels_ = array_length(level2room_);
 
 
@@ -18,14 +20,16 @@ function level_get_num_levels() {
 
 function level_restart() {
 	if (!is_undefined(global.current_level_)) {
-		room_goto(global.level2room_[global.current_level_]);
+		stats_add_reset();
+		level_switch(global.current_level_);
 	}
 	audio_stop_all();
 }
 
 function level_switch(_level_index) {
 	if (_level_index == global.current_level_) {
-		level_restart();
+		check_z_down_room_end();
+		room_goto(global.level2room_[global.current_level_]);
 		show_debug_message("level switched to " + string(_level_index));
 		return true;
 	}
@@ -33,6 +37,7 @@ function level_switch(_level_index) {
 		return false;
 	}
 	else {
+		check_z_down_room_end();
 		global.current_level_ = _level_index;
 		room_goto(global.level2room_[_level_index]);
 		return true;

@@ -15,25 +15,28 @@ function detect_input() {
 			}
 		
 			jump_released_this_frame = false;
-	
-			if (keyboard_check(ord("Z"))) {
-				jump_held = true;
-				time_held_jump += 1;
-			} 
-	
-			if (keyboard_check_pressed(ord("Z"))) {
-				j_buffer = 4;
-				frame_j_pressed = global.current_frame;
-			}
-	
-			if (keyboard_check_released(ord("Z"))) {
-				if (time_held_jump > 0 && time_held_jump < 50 && y_speed < 0) {
-					ended_jump_early = true;
-				}
-				time_held_jump = 0;
-				jump_held = false;
 			
-				jump_released_this_frame = true;
+			// don't charge jump if jump is held down since last room
+			if (!global.jump_down_since_last_room) {
+				if (keyboard_check(ord("Z"))) {
+					jump_held = true;
+					time_held_jump += 1;
+				}
+			
+				if (keyboard_check_pressed(ord("Z"))) {
+					j_buffer = 4;
+					frame_j_pressed = global.current_frame;
+				}
+	
+				if (keyboard_check_released(ord("Z"))) {
+					if (time_held_jump > 0 && time_held_jump < 50 && y_speed < 0) {
+						ended_jump_early = true;
+					}
+					time_held_jump = 0;
+					jump_held = false;
+			
+					jump_released_this_frame = true;
+				}
 			}
 		}
 	}

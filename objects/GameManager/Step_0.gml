@@ -30,4 +30,11 @@ if (!global.is_paused) {
 	part_manager_update_particles();
 }
 
+// continue checking if the player releases z since the last room 
+if (global.jump_down_since_last_room) {
+	check_z_down_room_start();
+}
+
+// show_debug_message(string(global.jump_down_since_last_room));
+
 timer_update();
