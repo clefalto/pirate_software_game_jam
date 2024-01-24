@@ -4,9 +4,16 @@ current_level_ = -1;
 
 // name: level number -> room that corresponds to it
 // this is populated MANUALLY EWWW
-level2room_ = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-num_levels_ = array_length(level2room_);
 
+first_level = 7;
+
+
+level2room_ = array_create(0);
+for (var _i = first_level; room_exists(_i); _i++) {
+	array_push(level2room_, _i);
+}
+
+num_levels_ = array_length(level2room_);
 
 
 // GLOBAL VARIABLES AAAAAAAAAAAAAAAAAAAAAAAGHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
@@ -31,6 +38,7 @@ function level_switch(_level_index) {
 		check_z_down_room_end();
 		room_goto(global.level2room_[global.current_level_]);
 		show_debug_message("level switched to " + string(_level_index));
+		timer_render();
 		return true;
 	}
 	else if (_level_index >= global.num_levels_ || _level_index < 0) {
@@ -40,6 +48,7 @@ function level_switch(_level_index) {
 		check_z_down_room_end();
 		global.current_level_ = _level_index;
 		room_goto(global.level2room_[_level_index]);
+		timer_render();
 		return true;
 	}
 }
@@ -68,4 +77,12 @@ function level_game_start() {
 	global.current_level_ = 0;
 	level_switch(global.current_level_);
 	show_debug_message("game starting");
+}
+
+function restart_game() {
+	global.current_level_ = 0;
+	global.time_elapsed = 0;
+	global.num_jumps = 0;
+	global.num_resets = 0;
+	level_switch(current_level_);
 }

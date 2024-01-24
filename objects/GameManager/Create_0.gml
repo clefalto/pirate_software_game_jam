@@ -144,7 +144,7 @@ else if (level_get_current_level() == 5) {
 }
 else if (level_get_current_level() == 6) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
-		"str": "6: labor of loaf.",
+		"str": "6: half baked.",
 		"duration": 80,
 		"font": fnt_m5x7,
 		"delay": 80,
@@ -168,7 +168,7 @@ else if (level_get_current_level() == 8) {
 }
 else if (level_get_current_level() == 9) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
-		"str": "9: [bread pun]",
+		"str": "9: hot cross.",
 		"duration": 80,
 		"font": fnt_m5x7,
 		"delay": 80,
@@ -176,7 +176,7 @@ else if (level_get_current_level() == 9) {
 }
 else if (level_get_current_level() == 10) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
-		"str": "10: [bread pun]",
+		"str": "10: on a roll.",
 		"duration": 80,
 		"font": fnt_m5x7,
 		"delay": 80,
@@ -184,7 +184,15 @@ else if (level_get_current_level() == 10) {
 }
 else if (level_get_current_level() == 11) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
-		"str": "11: [bread pun]",
+		"str": "11: upper crust.",
+		"duration": 80,
+		"font": fnt_m5x7,
+		"delay": 80,
+	});
+}
+else if (level_get_current_level() == 12) {
+	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
+		"str": "12: labor of loaf.",
 		"duration": 80,
 		"font": fnt_m5x7,
 		"delay": 80,

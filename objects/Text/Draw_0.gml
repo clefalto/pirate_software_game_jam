@@ -1,6 +1,10 @@
 
 draw_set_font(font);
-var _width = room_width/2;
 if (centered) {
-	draw_text_ext(x - _width/2, y, str, string_height(str), _width);
+	//draw_text_ext(x - width/2, y, str, string_height(str) - 4, width);
+	draw_text_ext_color(x - width/2, y, str, string_height(str) - 4, width, color, color, color, color, 1.0);
+}
+else {
+	//draw_text_ext(x, y, str, string_height(str) - 4, width);
+	draw_text_ext_color(x, y, str, string_height(str) - 4, width, color, color, color, color, 1.0);
 }

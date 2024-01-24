@@ -57,6 +57,7 @@ for (var i = 0; i < array_length(options); i++) {
 		draw_set_font(font);
 		draw_text(_adj_text_orig_x - 5, _text_orig_y, ">");
 		if (keyboard_check_pressed(ord("Z"))) {
+			// audio_play_sound(snd_land, 10, false);
 			options[selected].call_callback();
 		}
 	}

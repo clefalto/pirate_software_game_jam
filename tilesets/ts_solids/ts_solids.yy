@@ -164,8 +164,8 @@
     "path": "folders/Tile Sets.yy",
   },
   "spriteId": {
-    "name": "spr_solids",
-    "path": "sprites/spr_solids/spr_solids.yy",
+    "name": "spr_solids_TWO",
+    "path": "sprites/spr_solids_TWO/spr_solids_TWO.yy",
   },
   "spriteNoExport": false,
   "textureGroupId": {
