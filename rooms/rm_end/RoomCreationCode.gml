@@ -16,7 +16,7 @@ instance_create_depth(room_width/2, room_height/4 + 2*string_height("jumps: "), 
 });
 
 instance_create_depth(room_width/2, room_height/4 + 3*string_height("resets: "), 0, Menu, {
-	
+	// finish
 	
 	
 });
