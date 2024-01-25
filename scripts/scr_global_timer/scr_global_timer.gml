@@ -13,11 +13,11 @@ function timer_unpause() {
 	global.timer_is_paused = false;
 }
 
-function timer_unrender() {
+function timer_disable_render() {
 	global.display_timer = false;
 }
 
-function timer_render() {
+function timer_enable_render() {
 	global.display_timer = true;
 }
 

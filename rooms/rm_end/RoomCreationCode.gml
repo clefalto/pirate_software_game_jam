@@ -1,5 +1,5 @@
 timer_pause();
-timer_unrender();
+timer_disable_render();
 
 instance_create_depth(room_width/2, room_height/4, 0, Text, {
 	"str": "mission complete.",
@@ -30,13 +30,12 @@ instance_create_depth(room_width/2, room_height/4 + 3*string_height("jumps: "), 
 
 instance_create_depth(3*room_width/4, room_height/2, 0, Menu, {
 	// finish
-	"width": 50,
-	"height": 50,
-	"options": [ new MenuItem("restart", fnt_m5x7, 90-3, 4, global.restart_game), new MenuItem("quit", fnt_m5x7, 90 - 3, 4, game_end)] ,
+	"width": 70,
+	"height": 30,
+	"options": [ new MenuItem("return to title", fnt_m5x7, 90-3, 4, return_to_title), new MenuItem("quit", fnt_m5x7, 90 - 3, 4, game_end)] ,
 	"centered": false,
 	"text_centered": true,
 	"title": "",
-	
 });
 
 instance_create_depth(room_width/2,  room_height/4 + 4*string_height("jumps: "), 0, Text, {

@@ -116,6 +116,7 @@
     {"id":{"name":"scr_animator","path":"scripts/scr_animator/scr_animator.yy",},},
     {"id":{"name":"spr_bready_unspready","path":"sprites/spr_bready_unspready/spr_bready_unspready.yy",},},
     {"id":{"name":"Menu","path":"objects/Menu/Menu.yy",},},
+    {"id":{"name":"spr_jar","path":"sprites/spr_jar/spr_jar.yy",},},
     {"id":{"name":"spr_solids","path":"sprites/spr_solids/spr_solids.yy",},},
     {"id":{"name":"rm_level_1","path":"rooms/rm_level_1/rm_level_1.yy",},},
     {"id":{"name":"rm_level_2","path":"rooms/rm_level_2/rm_level_2.yy",},},

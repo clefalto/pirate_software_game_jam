@@ -38,7 +38,7 @@ function level_switch(_level_index) {
 		check_z_down_room_end();
 		room_goto(global.level2room_[global.current_level_]);
 		show_debug_message("level switched to " + string(_level_index));
-		timer_render();
+		timer_enable_render();
 		return true;
 	}
 	else if (_level_index >= global.num_levels_ || _level_index < 0) {
@@ -48,7 +48,7 @@ function level_switch(_level_index) {
 		check_z_down_room_end();
 		global.current_level_ = _level_index;
 		room_goto(global.level2room_[_level_index]);
-		timer_render();
+		timer_enable_render();
 		return true;
 	}
 }
@@ -79,10 +79,20 @@ function level_game_start() {
 	show_debug_message("game starting");
 }
 
+// call when starting the game again, puts you back at level 0. can effectively be replaced with return_to_title()
 function restart_game() {
 	global.current_level_ = 0;
 	global.time_elapsed = 0;
 	global.num_jumps = 0;
 	global.num_resets = 0;
 	level_switch(current_level_);
+}
+
+// call when returning to the title screen, resetting all global variables
+function return_to_title() {
+	global.current_level_ = -1;
+	global.time_elapsed = 0;
+	global.num_jumps = 0;
+	global.num_resets = 0;
+	room_goto(2);
 }

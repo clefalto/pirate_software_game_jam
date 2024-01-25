@@ -87,6 +87,7 @@
     {"name":"rm_end","order":14,"path":"rooms/rm_end/rm_end.yy",},
     {"name":"scr_animator","order":6,"path":"scripts/scr_animator/scr_animator.yy",},
     {"name":"Menu","order":11,"path":"objects/Menu/Menu.yy",},
+    {"name":"spr_jar","order":5,"path":"sprites/spr_jar/spr_jar.yy",},
     {"name":"spr_solids","order":3,"path":"sprites/spr_solids/spr_solids.yy",},
     {"name":"rm_level_1","order":2,"path":"rooms/rm_level_1/rm_level_1.yy",},
     {"name":"rm_level_2","order":8,"path":"rooms/rm_level_2/rm_level_2.yy",},

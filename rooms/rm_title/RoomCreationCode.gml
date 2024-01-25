@@ -3,12 +3,12 @@
 // draw logo (when finished)
 
 timer_pause();
-timer_unrender();
+timer_disable_render();
 
 start_game = function() {
 	level_game_start();
 	timer_unpause();
-	timer_render();
+	timer_enable_render();
 }
 
 instance_create_depth(room_width/2, room_height/2 - 70, -1000, Text, {
@@ -17,9 +17,9 @@ instance_create_depth(room_width/2, room_height/2 - 70, -1000, Text, {
 	"centered": true,
 });
 
-instance_create_depth(room_width/2 - (50/2), room_height/2 - 50, -1000, Menu, {
+instance_create_depth(room_width/2 - (50/2), room_height/2 - 35, -1000, Menu, {
 	"width": 50,
-	"height": 60,
+	"height": 30,
 	"options": [ new MenuItem("start", fnt_m5x7, 90-3, 4, start_game), new MenuItem("quit", fnt_m5x7, 90 - 3, 4, game_end)] ,
 	"centered": false,
 	"text_centered": true,
