@@ -6,12 +6,14 @@ animation data structs
 */
 
 player_animations = {
-	cnt: 4,
+	cnt: 7,
 	"default":		animation_create("default", spr_bready, 25, 0, 0, false),
 	squish:			animation_create("squish", spr_bready, 25, 1, 2, true),
 	initial_jump:	animation_create("initial_jump", spr_bready, 25, 3, 4, true),
 	air_spin:		animation_create("air_spin", spr_bready, 25, 4, 23, false),
 	splat:			animation_create("splat", spr_bready, 25, 24, 24, true),
+	die:			animation_create("die", spr_bready_die, 75, 0, 7, true),
+	spawn:			animation_create("spawn", spr_bready_spawny, 125, 0, 12, true)
 }
 
 level_exit_animations = {

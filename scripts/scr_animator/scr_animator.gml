@@ -10,6 +10,7 @@ function animator_create(_animations = undefined) {
 		disable_auto_update: false,
 		loop: false,
 		on_animation_end: undefined,
+		disable_set: false,
 	}
 }
 
@@ -63,6 +64,7 @@ function animator_decrease_frame(_animator) {
 /// @param _on_animation_end: callback function to call when this animation ends
 /// note: enables auto update for this animator when the animation is changed
 function animator_set_animation(_animator, _animation, _on_animation_end = undefined) {
+	if (_animator.disable_set) return;
 	if (!is_undefined(_animator.current_animation)) {
 		if (animation_get_name(_animator.current_animation) != _animation) {
 			if (!is_undefined(_animator.animations[$ _animation])) {
@@ -133,3 +135,11 @@ function animator_disable_auto_update(_animator) {
 function animator_enable_auto_update(_animator) {
 	_animator.disable_auto_update = false;
 }
+
+function animator_disable_set(_animator) {
+	_animator.disable_set = true;
+}
+
+function animator_enable_set(_animator) {
+	_animator.disable_set = false;
+}	

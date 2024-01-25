@@ -1,5 +1,3 @@
-is_in_debug_mode = true;
-
 current_level_ = -1;
 
 // name: level number -> room that corresponds to it
@@ -85,7 +83,7 @@ function restart_game() {
 	global.time_elapsed = 0;
 	global.num_jumps = 0;
 	global.num_resets = 0;
-	level_switch(current_level_);
+	level_switch(global.current_level_);
 }
 
 // call when returning to the title screen, resetting all global variables

@@ -17,7 +17,7 @@ function detect_input() {
 			jump_released_this_frame = false;
 			
 			// don't charge jump if jump is held down since last room
-			if (!global.jump_down_since_last_room) {
+			if (true) { //!global.jump_down_since_last_room
 				if (keyboard_check(ord("Z"))) {
 					jump_held = true;
 					time_held_jump += 1;
@@ -149,7 +149,7 @@ function update_speed() {
 		}
 		
 		if (bbox_bottom + 1 >= room_height) {
-			on_player_die();
+			kill_player();
 		}
 	}
 }
@@ -197,7 +197,7 @@ if (is_enabled) {
 	self.update_animation();
 	
 	if (spread_meter <= 0.0 && x_speed == 0 && is_grounded && y_speed == 0.0) {
-		on_player_die("unjammed..");
+		kill_player();
 	}
 	
 	// move is called in event_inherited (above)

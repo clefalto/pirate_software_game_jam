@@ -1,7 +1,7 @@
 // PLAYER_CREATE
 
 
-input_enabled = true;
+input_enabled = false;
 //alarm[2] = 20;
 
 event_inherited();
@@ -295,7 +295,12 @@ on_ground_collide = function() {
 	animator_set_animation(animator, "default");
 	if (global.current_frame >= 3) {
 		// play landing nouise
-		audio_play_sound(snd_land_2, 10, false, 0.8, 0, 1.2);
+		if (global.silly) {
+			audio_play_sound(snd_SPLAT, 10, false, 0.5, 0.1, 1.2);
+		}
+		else {
+			audio_play_sound(snd_land_2, 10, false, 0.8, 0, 1.2);
+		}
 	}		
 }
 
@@ -327,10 +332,23 @@ on_leave_ground = function() {
 
 #endregion
 
+function kill_player() {
+	if (state != STATE.DEAD) {
+		state = STATE.DEAD;
+		disable_physics();
+		on_player_die();
+	}
+}
+
 function on_player_die(_message = "you're toast") {
-	var _gm = instance_find(GameManager, 0);
-	
-	_gm.on_player_die(_message);
+	// don't repeatedly kill the player
+	// play die animation for player
+	audio_stop_all();
+	audio_play_sound(snd_death, 10, false);
+	animator_set_animation(animator, "die");
+	animator_disable_set(animator);
+	var _gm = instance_find(GameManager, 0)
+	_gm.on_player_die();
 }
 
 //// called to make player jump, this is also constantly called when the button is held down
@@ -389,5 +407,15 @@ function disable_gravity(_length = 60) {
 	alarm[3] = _length;
 }
 
+//function enable_input() {
+//	input_enabled = true;
+//	// animator_enable_set(animator);
+//}
+
 // actual creation Code Steps
 enable();
+
+audio_play_sound(snd_respawn, 10, false);
+animator_set_animation(animator, "spawn", function() { input_enabled = true; animator_enable_set(animator)} );
+animator_disable_set(animator);
+//enable();

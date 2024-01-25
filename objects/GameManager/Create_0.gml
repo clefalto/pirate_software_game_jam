@@ -17,6 +17,7 @@ if (global.player != noone) {
 	global.player_exists = true;
 }
 
+
 timer_unpause();
 
 function pause() {
@@ -41,17 +42,6 @@ function on_pause() {
 	
 		_obj.disable(); 
 	}
-	
-	// spawn in pause menu
-	pause_menu = instance_create_depth(x, y, -1000, Menu, {
-		"width": 60,
-		"height": 75,
-		"line_height": 8,
-		"text_centered": true,
-		"options": [new MenuItem("resume", fnt_m5x7, 25, 8, unpause), new MenuItem("options", fnt_m5x7, 25, 8), new MenuItem("quit", fnt_m5x7, 25, 8, game_end)],
-		"title": "paused",
-	});
-	
 	
 }
 
@@ -85,14 +75,18 @@ function on_level_complete() {
 }
 
 function on_player_die(_message = "you're toast.") {
-	pause();
-	instance_create_depth(250, 140, -1000, Menu, {
-		"width": 100,
-		"height": 35, 
-		"options": [ new MenuItem("restart..", fnt_m5x7, 35-4, 8, level_restart) ],
-		"centered": true,
-		"title": _message,
-	});
+	// pause();
+	//instance_create_depth(250, 140, -1000, Menu, {
+	//	"width": 100,
+	//	"height": 35, 
+	//	"options": [ new MenuItem("restart..", fnt_m5x7, 35-4, 8, level_restart) ],
+	//	"centered": true,
+	//	"title": _message,
+	//});
+	
+	
+	// wait for about 30 frames, then play screen transition, where the level restarts at the end
+	event_user(0);
 }
 
 #region level specific stuff (message)
