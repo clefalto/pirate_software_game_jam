@@ -23,7 +23,7 @@ function MenuItem(_text, _font, _max_width, _line_height, _callback = function()
 		//if (center) {
 		//	_x += max_width/2 - string_width(text)/2;
 		//}
-		draw_text_ext(_x, _y, self.text, 1, self.max_width);
+		draw_text_ext_color(_x, _y, self.text, 1, self.max_width, c_black, c_black, c_black, c_black, 1.0);
 		
 		self.bound_left = 0 + _x;
 		self.bound_top = 0 + line_height/2 + _y;

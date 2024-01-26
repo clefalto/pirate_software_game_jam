@@ -11,13 +11,16 @@ start_game = function() {
 	timer_enable_render();
 }
 
-instance_create_depth(room_width/2, room_height/2 - 70, -1000, Text, {
-	"str": "it's breading",
-	"font": fnt_m5x7,
-	"centered": true,
-});
+// title
+//instance_create_depth(room_width/2, room_height/2 - 70, -1000, Text, {
+//	"str": "LEAVEN",
+//	"font": fnt_m5x7,
+//	"centered": true,
+//});
 
-instance_create_depth(room_width/2 - (50/2), room_height/2 - 35, -1000, Menu, {
+draw_sprite(spr_logo, 0, room_width/2, room_height/2 - 10);
+
+instance_create_depth(room_width/2 - (50/2), room_height/2 - 25, -1000, Menu, {
 	"width": 50,
 	"height": 30,
 	"options": [ new MenuItem("start", fnt_m5x7, 90-3, 4, start_game), new MenuItem("quit", fnt_m5x7, 90 - 3, 4, game_end)] ,

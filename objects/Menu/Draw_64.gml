@@ -18,7 +18,7 @@ if (title != "") {
 	}
 	
 	draw_set_font(font);
-	draw_text(_adj_text_orig_x, _text_orig_y, title);
+	draw_text_color(_adj_text_orig_x, _text_orig_y, title, c_black, c_black, c_black, c_black, 1.0);
 	
 	_text_orig_y += font_get_size(font) + 3;
 	
@@ -55,7 +55,7 @@ for (var i = 0; i < array_length(options); i++) {
 	
 	if (selected == i) {
 		draw_set_font(font);
-		draw_text(_adj_text_orig_x - 5, _text_orig_y, ">");
+		draw_text_color(_adj_text_orig_x - 5, _text_orig_y, ">", c_purple, c_purple, c_purple, c_purple, 1.0);
 		if (keyboard_check_pressed(ord("Z"))) {
 			// audio_play_sound(snd_land, 10, false);
 			options[selected].call_callback();

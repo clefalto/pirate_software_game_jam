@@ -28,9 +28,10 @@ instance_create_depth(room_width/2, room_height/4 + 3*string_height("jumps: "), 
 	"color": c_blue,
 });
 
+// RESTART MENU
 instance_create_depth(3*room_width/4 - 20, room_height/4, 0, Menu, {
 	// finish
-	"width": 90,
+	"width": 95,
 	"height": 30,
 	"options": [ new MenuItem("return to title", fnt_m5x7, 90-3, 4, return_to_title), new MenuItem("quit", fnt_m5x7, 90 - 3, 4, game_end)] ,
 	"centered": false,

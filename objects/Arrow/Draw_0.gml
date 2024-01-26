@@ -1,0 +1,1 @@
+// draw_sprite_ext(sprite_index, 0, x , y + sin(current_time/200), 1.0, 1.0, image_angle, c_white, 1.0);

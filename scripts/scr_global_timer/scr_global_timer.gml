@@ -70,6 +70,6 @@ function timer_draw(_x, _y) {
 	if (global.display_timer) {
 		var _time = format_time(global.time_elapsed);
 		draw_sprite_stretched_ext(spr_text_background, 0, _x - 1, _y + 2, string_width(_time) + 1, string_height(_time) - 3, c_white, 0.70);
-		draw_text(_x, _y, _time);
+		draw_text_color(_x, _y, _time, c_white, c_white, c_white, c_white, 1.0);
 	}
 }

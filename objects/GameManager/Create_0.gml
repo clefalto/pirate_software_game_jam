@@ -93,7 +93,7 @@ function on_player_die(_message = "you're toast.") {
 
 
 var _title_text_pos_x = 10;
-var _title_text_pos_y = 20;
+var _title_text_pos_y = 14;
 if (level_get_current_level() == 0) {
 	//if (instance_exists(Player)) {
 	//	var _player = instance_find(Player, 0);
@@ -102,105 +102,105 @@ if (level_get_current_level() == 0) {
 	//}
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "0: unite.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 1) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "1: jumping consumes jam.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 2) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "2: spread jam to all.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 3) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
-		"str": "3: againt the grain.",
-		"duration": 80,
+		"str": "3: against the grain.",
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 4) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "4: mysterious device.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 5) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
-		"str": "5: you're toast. again",
-		"duration": 80,
+		"str": "5: you're toast.",
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 6) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "6: half baked.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 7) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "7: time to rise.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 8) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "8: kneady.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 9) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "9: hot cross.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 10) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "10: on a roll.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 11) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "11: upper crust.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 else if (level_get_current_level() == 12) {
 	instance_create_depth(_title_text_pos_x, _title_text_pos_y, -1000, TutorialText, {
 		"str": "12: labor of loaf.",
-		"duration": 80,
+		"duration": 60,
 		"font": fnt_m5x7,
-		"delay": 80,
+		"delay": 100,
 	});
 }
 

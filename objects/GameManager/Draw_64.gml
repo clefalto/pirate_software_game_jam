@@ -1,8 +1,8 @@
 if (global.player_exists) {
 	// draw Jam Meter (previously known as Spread Meter)
 	var _player = global.player;
-	var _x = 10;
-	var _y = 10;
+	var _x = 3;
+	var _y = 2;
 	
 	var _width = 100;
 	var _height = 12;
@@ -12,4 +12,5 @@ if (global.player_exists) {
 	draw_sprite_stretched(spr_jam_meter_border, 0, _x, _y, 100, _height);
 }
 
+// draw timer
 timer_draw(270, 0);
