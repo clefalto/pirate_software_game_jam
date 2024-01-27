@@ -83,6 +83,10 @@ function restart_game() {
 	global.time_elapsed = 0;
 	global.num_jumps = 0;
 	global.num_resets = 0;
+	
+	// destroy persistent objects
+	instance_destroy(instance_find(ScreenWipe, 0));
+	
 	level_switch(global.current_level_);
 }
 
@@ -92,5 +96,9 @@ function return_to_title() {
 	global.time_elapsed = 0;
 	global.num_jumps = 0;
 	global.num_resets = 0;
+	
+	// destroy persistent objects
+	instance_destroy(instance_find(ScreenWipe, 0));
+	
 	room_goto(2);
 }

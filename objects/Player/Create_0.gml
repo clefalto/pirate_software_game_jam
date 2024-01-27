@@ -416,6 +416,6 @@ function disable_gravity(_length = 60) {
 enable();
 
 audio_play_sound(snd_respawn, 10, false);
-animator_set_animation(animator, "spawn", function() { input_enabled = true; animator_enable_set(animator)} );
+animator_set_animation(animator, "spawn", function() { input_enabled = true; animator_enable_set(animator); show_debug_message("spawn animation ended")} );
 animator_disable_set(animator);
 //enable();

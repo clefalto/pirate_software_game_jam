@@ -196,6 +196,8 @@ if (is_enabled) {
 	self.update_speed();
 	self.update_animation();
 	
+	show_debug_message("player input_enabled " + string(input_enabled));
+	
 	if (spread_meter <= 0.0 && x_speed == 0 && is_grounded && y_speed == 0.0) {
 		kill_player();
 	}

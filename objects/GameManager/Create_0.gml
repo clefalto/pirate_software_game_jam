@@ -6,6 +6,7 @@ global.current_frame = 0;
 global.debug_enabled = false;
 
 pause_menu = undefined;
+player_input_restore_value = false;
 
 global.all_tiles_spreaded = false;
 instance_create_depth(0, 0, 0, UnlockableTileManager);
@@ -34,7 +35,7 @@ function on_pause() {
 	timer_pause();
 	// disable input for player (player can't move anyway if it's actordisabled but just being safe
 	if (global.player_exists) {
-		global.player.input_enabled = false;
+		player_input_restore_value = global.player.input_enabled;
 	}
 	// pause every actor TODO pause everything that isn't an actor SUCH AS PARTICLES and animations
 	for (var _i = 0; _i < instance_number(Actor); _i++) {
@@ -48,7 +49,7 @@ function on_pause() {
 function on_unpause() {
 	timer_unpause();
 	if (global.player_exists) {
-		global.player.input_enabled = true;
+		global.player.input_enabled = player_input_restore_value;
 	}
 	// enable actors
 	for (var _i = 0; _i < instance_number(Actor); _i++) {
